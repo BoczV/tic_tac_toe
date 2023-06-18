@@ -1,3 +1,6 @@
+from interface.colors import bcolors
+
+
 def draw_header(part_of_alphabet):
     line_identifier = "0. "
     header = f"{line_identifier}"
@@ -7,7 +10,7 @@ def draw_header(part_of_alphabet):
 
     header += "|"
     print(header)
-    draw_separator(line_identifier, header)
+    draw_separator(line_identifier, len(part_of_alphabet))
 
 
 def draw_body(part_of_alphabet, board):
@@ -18,15 +21,16 @@ def draw_body(part_of_alphabet, board):
         part_of_row = ""
         for j in part_of_alphabet:
             element = board[(j + str(helper_index))]
-            part_of_row += f"| {element} "
+            colored_element = bcolors.OKBLUE + element + bcolors.ENDC if element == "X" else (bcolors.WARNING + element + bcolors.ENDC if element == "O" else element)
+            part_of_row += f"| {colored_element} "
         row = f"{line_identifier}{part_of_row}|"
         print(row)
-    draw_separator(line_identifier, row)
+    draw_separator(line_identifier, len(part_of_alphabet))
 
 
-def draw_separator(line_identifier, countable_body):
+def draw_separator(line_identifier, size):
     len_line_identifier = len(line_identifier)
-    length_of_dashes = len(countable_body) - len_line_identifier
+    length_of_dashes = size * 4 + 1
     print(" " * len_line_identifier + "-" * length_of_dashes)
 
 

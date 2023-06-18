@@ -1,5 +1,9 @@
 import os
+import time
 from interface.board_drawer import draw_board
+from interface.colors import bcolors
+
+
 good_board_size_answers = ['a', 'b', 'c']
 
 
@@ -69,5 +73,21 @@ def check_step_answer(step_answer, needed_part_of_alphabet, board_record):
 
 
 def get_next_step_answer(needed_part_of_alphabet, board_record):
+    os.system('clear')
+    draw_board(needed_part_of_alphabet, board_record)
     step_answer = ask_to_make_a_step(False, False)
     return check_step_answer(step_answer, needed_part_of_alphabet, board_record)
+
+
+def robot_makes_a_move(needed_part_of_alphabet, board_record):
+    os.system('clear')
+    draw_board(needed_part_of_alphabet, board_record)
+    print("Robot turn...")
+    time.sleep(2)
+
+
+def finish_game(who_won, needed_part_of_alphabet, board_record):
+    os.system('clear')
+    draw_board(needed_part_of_alphabet, board_record)
+    result = bcolors.HEADER + "Tie!" + bcolors.ENDC if who_won is None else (bcolors.OKGREEN + "User won!" + bcolors.ENDC if who_won == "X" else bcolors.FAIL + "Robot won!" + bcolors.ENDC)
+    print("Finished game! " + result)
