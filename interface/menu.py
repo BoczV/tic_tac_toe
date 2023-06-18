@@ -1,7 +1,4 @@
 import os
-from interface.board_drawer import draw_board 
-
-
 good_board_size_answers = ['a', 'b', 'c']
 
 
@@ -39,13 +36,3 @@ def check_game_board_size_answer(game_board_size_answer):
 def get_game_board_size_answer():
     game_board_size_answer = ask_game_board_size(False)
     return check_game_board_size_answer(game_board_size_answer)
-
-
-def start_game():
-    start_answer = get_start_answer()
-    os.system('clear')
-    if start_answer == "y":
-        board_size = get_game_board_size_answer()
-        draw_board(board_size)
-    else:
-        print("Okay, bye!")

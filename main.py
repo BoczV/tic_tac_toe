@@ -1,4 +1,4 @@
-from interface.menu import start_game
+from playing_logic.game import start_game
 
 def main():
     start_game()
