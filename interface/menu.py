@@ -5,6 +5,7 @@ from interface.colors import bcolors
 
 
 good_board_size_answers = ['a', 'b', 'c']
+good_diff_answers = ["a", "b"]
 
 
 def welcome_message(previous_failed_try):
@@ -91,3 +92,28 @@ def finish_game(who_won, needed_part_of_alphabet, board_record):
     draw_board(needed_part_of_alphabet, board_record)
     result = bcolors.HEADER + "Tie!" + bcolors.ENDC if who_won is None else (bcolors.OKGREEN + "User won!" + bcolors.ENDC if who_won == "X" else bcolors.FAIL + "Robot won!" + bcolors.ENDC)
     print("Finished game! " + result)
+
+
+def ask_difficulty_level(previous_failed_try):
+    if previous_failed_try:
+        print("Wrong input!")
+    print("Difficulty levels: ")
+    print("a, Super easy")
+    print("b, Medium")
+    return input("Choose one (a/b): ")
+
+
+def check_difficulty_level_answer(difficulty_answer):
+    diff_answer = difficulty_answer
+
+    while diff_answer not in good_diff_answers:
+        os.system('clear')
+        diff_answer = ask_difficulty_level(True)
+    return diff_answer
+
+
+def get_difficulty_level():
+    os.system('clear')
+    difficulty_level = ask_difficulty_level(False)
+    return check_difficulty_level_answer(difficulty_level)
+
