@@ -9,6 +9,7 @@ good_diff_answers = ["a", "b", "c"]
 
 
 def welcome_message(previous_failed_try):
+    os.system('clear')
     print("TIC-TAC-TO")
     if previous_failed_try:
         print("Wrong input!")
