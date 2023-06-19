@@ -2,7 +2,7 @@ import os
 import string
 
 from interface.menu import get_game_board_size_answer, get_start_answer, finish_game, get_difficulty_level
-from playing_logic.robot import robot_move_easy_level, setup_informations_for_robot, robot_move_medium_level
+from playing_logic.robot import robot_move_easy_level, setup_informations_for_robot, robot_move_medium_level, robot_move_impossible_level
 from playing_logic.player import player_move
 from playing_logic.win_inspector import check_if_someone_wins
 
@@ -39,8 +39,10 @@ def play_one_round(player_value, difficulty_level):
     else:
         if difficulty_level == "a":
             robot_move_easy_level(needed_part_of_alphabet, board_record)
-        else :
+        elif difficulty_level == "b":
             robot_move_medium_level(board_record, needed_part_of_alphabet)
+        else:
+            robot_move_impossible_level(board_record, needed_part_of_alphabet)
 
 
 def init_board_record(size):

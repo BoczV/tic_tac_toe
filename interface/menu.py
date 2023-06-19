@@ -5,7 +5,7 @@ from interface.colors import bcolors
 
 
 good_board_size_answers = ['a', 'b', 'c']
-good_diff_answers = ["a", "b"]
+good_diff_answers = ["a", "b", "c"]
 
 
 def welcome_message(previous_failed_try):
@@ -84,7 +84,7 @@ def robot_makes_a_move(needed_part_of_alphabet, board_record):
     os.system('clear')
     draw_board(needed_part_of_alphabet, board_record)
     print("Robot turn...")
-    time.sleep(2)
+    time.sleep(1)
 
 
 def finish_game(who_won, needed_part_of_alphabet, board_record):
@@ -100,7 +100,8 @@ def ask_difficulty_level(previous_failed_try):
     print("Difficulty levels: ")
     print("a, Super easy")
     print("b, Medium")
-    return input("Choose one (a/b): ")
+    print("c, Impossible")
+    return input("Choose one (a/b/c): ")
 
 
 def check_difficulty_level_answer(difficulty_answer):
@@ -116,4 +117,3 @@ def get_difficulty_level():
     os.system('clear')
     difficulty_level = ask_difficulty_level(False)
     return check_difficulty_level_answer(difficulty_level)
-
