@@ -27,7 +27,8 @@ class Game:
         board_size_char = self.menu.get_game_board_size_answer()
         self.size = self.board_size_swithcer[board_size_char]
         self.init_board_record()
-        self.robot.setup_informations_for_robot()
+        self.robot = Robot("O", self.needed_part_of_alphabet, self.size)
+        self.win_inspector = Win_inspector(self.needed_part_of_alphabet, self.size)
 
 
     def play(self):
@@ -65,8 +66,6 @@ class Game:
                 key = f"{letter}{j}"
                 self.board_record[key] = "."
             self.needed_part_of_alphabet.append(letter)
-        self.robot = Robot("O", self.needed_part_of_alphabet, self.size)
-        self.win_inspector = Win_inspector(self.needed_part_of_alphabet, self.size)
 
 
     def game(self):

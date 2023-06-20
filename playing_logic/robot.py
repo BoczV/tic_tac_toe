@@ -15,6 +15,7 @@ class Robot:
         self.menu = Menu()
         self.needed_part_of_alphabet = needed_part_of_alphabet
         self.size = size
+        self.setup_informations_for_robot()
 
 
     def setup_informations_for_robot(self):
