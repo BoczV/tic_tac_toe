@@ -10,9 +10,9 @@ class Robot:
     menu = None
     size = 0
 
-    def __init__(self, player_value, needed_part_of_alphabet, size):
+    def __init__(self, player_value, needed_part_of_alphabet, size, menu):
         self.player_value = player_value
-        self.menu = Menu()
+        self.menu = menu
         self.needed_part_of_alphabet = needed_part_of_alphabet
         self.size = size
         self.setup_informations_for_robot()

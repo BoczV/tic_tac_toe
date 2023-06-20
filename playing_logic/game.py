@@ -19,15 +19,15 @@ class Game:
     difficulty_level = None
 
     def __init__(self):
-        self.player = Player("X")
         self.menu = Menu()
+        self.player = Player("X", self.menu)
 
 
     def setup(self):
         board_size_char = self.menu.get_game_board_size_answer()
         self.size = self.board_size_swithcer[board_size_char]
         self.init_board_record()
-        self.robot = Robot("O", self.needed_part_of_alphabet, self.size)
+        self.robot = Robot("O", self.needed_part_of_alphabet, self.size, self.menu)
         self.win_inspector = Win_inspector(self.needed_part_of_alphabet, self.size)
 
 
