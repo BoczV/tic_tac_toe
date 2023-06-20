@@ -1,7 +1,8 @@
-from playing_logic.game import game
+from playing_logic.game import Game
 
 def main():
-    game()
+    game = Game()
+    game.game()
 
 
 if __name__ == "__main__":
