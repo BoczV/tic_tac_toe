@@ -19,7 +19,6 @@ class Game:
     def __init__(self):
         self.win_inspector = Win_inspector()
         self.player = Player("X")
-        self.robot = Robot("O")
         self.menu = Menu()
 
 
@@ -27,7 +26,7 @@ class Game:
         board_size_char = self.menu.get_game_board_size_answer()
         board_size = self.board_size_swithcer[board_size_char]
         self.init_board_record(board_size)
-        self.robot.setup_informations_for_robot(board_size, self.needed_part_of_alphabet)
+        self.robot.setup_informations_for_robot()
         return board_size
 
 
@@ -52,11 +51,11 @@ class Game:
 
     def robot_round(self, difficulty_level):
         if difficulty_level == "a":
-                self.robot.robot_move_easy_level(self.needed_part_of_alphabet, self.board_record)
+                self.robot.robot_move_easy_level(self.board_record)
         elif difficulty_level == "b":
-            self.robot.robot_move_medium_level(self.board_record, self.needed_part_of_alphabet)
+            self.robot.robot_move_medium_level(self.board_record)
         else:
-            self.robot.robot_move_impossible_level(self.board_record, self.needed_part_of_alphabet)
+            self.robot.robot_move_impossible_level(self.board_record)
 
 
     def init_board_record(self, size):
@@ -66,6 +65,7 @@ class Game:
                 key = f"{letter}{j}"
                 self.board_record[key] = "."
             self.needed_part_of_alphabet.append(letter)
+        self.robot = Robot("O", self.needed_part_of_alphabet, size)
 
 
     def game(self):
