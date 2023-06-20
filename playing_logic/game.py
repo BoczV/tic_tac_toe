@@ -37,12 +37,16 @@ def play_one_round(player_value, difficulty_level):
     if player_value == "X":
         player_move(needed_part_of_alphabet, board_record)
     else:
-        if difficulty_level == "a":
+        robot_round(difficulty_level)
+
+
+def robot_round(difficulty_level):
+    if difficulty_level == "a":
             robot_move_easy_level(needed_part_of_alphabet, board_record)
-        elif difficulty_level == "b":
-            robot_move_medium_level(board_record, needed_part_of_alphabet)
-        else:
-            robot_move_impossible_level(board_record, needed_part_of_alphabet)
+    elif difficulty_level == "b":
+        robot_move_medium_level(board_record, needed_part_of_alphabet)
+    else:
+        robot_move_impossible_level(board_record, needed_part_of_alphabet)
 
 
 def init_board_record(size):
