@@ -53,7 +53,7 @@ class Game:
         if self.difficulty_level == "a":
                 self.robot.robot_move_easy_level(self.board_record)
         elif self.difficulty_level == "b":
-            self.robot.robot_move_medium_level(self.board_record)
+            self.robot.robot_move_medium_level(self.board_record, None)
         else:
             self.robot.robot_move_impossible_level(self.board_record)
 

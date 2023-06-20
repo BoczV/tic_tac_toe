@@ -55,9 +55,9 @@ class Robot:
         board_record[random_key] = self.player_value
 
 
-    def robot_move_medium_level(self, board_record):
+    def robot_move_medium_level(self, board_record, received_available_places):
         self.menu.robot_makes_a_move(self.needed_part_of_alphabet, board_record)
-        available_places = self.find_available_places(board_record)
+        available_places = self.find_available_places(board_record) if received_available_places is None else received_available_places
         possible_blocking_option_for_danger = self.find_a_dangerous_path_to_block(board_record)
 
         if possible_blocking_option_for_danger != []:
@@ -93,7 +93,7 @@ class Robot:
             else:
                 self.find_available_places_in_corner(available_places, board_record)
         else:
-            self.robot_move_medium_level(board_record)
+            self.robot_move_medium_level(board_record, available_places)
 
 
     def find_available_places_in_corner(self, available_places, board_record):
