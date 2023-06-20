@@ -23,7 +23,7 @@ class Game:
         self.menu = Menu()
 
 
-    def start_game(self):
+    def setup(self):
         board_size_char = self.menu.get_game_board_size_answer()
         self.size = self.board_size_swithcer[board_size_char]
         self.init_board_record()
@@ -68,11 +68,11 @@ class Game:
             self.needed_part_of_alphabet.append(letter)
 
 
-    def game(self):
+    def start_game(self):
         start_answer = self.menu.get_start_answer()
         os.system('clear')
         if start_answer == "y":
-            self.start_game()
+            self.setup()
             self.difficulty_level = self.menu.get_difficulty_level()
             self.play()
         else:
