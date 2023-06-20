@@ -96,7 +96,7 @@ class Menu:
     def finish_game(self, who_won, needed_part_of_alphabet, board_record):
         os.system('clear')
         self.board_drawer.draw_board(needed_part_of_alphabet, board_record)
-        result = bcolors.HEADER + "Tie!" + bcolors.ENDC if who_won is None else (bcolors.OKGREEN + "User won!" + bcolors.ENDC if who_won == "X" else bcolors.FAIL + "Robot won!" + bcolors.ENDC)
+        result = bcolors.HEADER + "Tie!" + bcolors.ENDC if who_won is None else (bcolors.OKGREEN + "User won!" + bcolors.ENDC if who_won == "user" else bcolors.FAIL + "Robot won!" + bcolors.ENDC)
         print("Finished game! " + result)
 
 
@@ -150,3 +150,24 @@ class Menu:
     def exit_program(self):
         print("Ok, bye!")
         sys.exit()
+    
+
+    def ask_character_answer(self, previous_failed_try):
+        if previous_failed_try:
+            print("Wrong input!")
+        return input("Which character do you choose? (X/O) ")
+
+
+    def check_character_answer(self, character_answer):
+        char_answer = character_answer
+
+        while char_answer.lower() != "x" and char_answer.lower() != "o":
+            os.system('clear')
+            char_answer = self.ask_character_answer(True)
+        return char_answer
+
+
+    def get_character_answer(self):
+        os.system('clear')
+        char_answer = self.ask_character_answer(False)
+        return self.check_character_answer(char_answer)

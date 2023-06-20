@@ -17,22 +17,25 @@ class Game:
     menu = None
     size = 0
     difficulty_level = None
+    user_char = None
 
     def __init__(self):
         self.menu = Menu()
-        self.player = Player("X", self.menu)
 
 
     def setup(self):
         board_size_char = self.menu.get_game_board_size_answer()
         self.size = self.board_size_swithcer[board_size_char]
+        self.user_char = self.menu.get_character_answer().upper()
         self.init_board_record()
-        self.robot = Robot("O", self.needed_part_of_alphabet, self.size, self.menu)
-        self.win_inspector = Win_inspector(self.needed_part_of_alphabet, self.size)
+        robot_char = "O" if self.user_char == "X" else "X"
+        self.player = Player(self.user_char, self.menu, self.needed_part_of_alphabet)
+        self.robot = Robot(robot_char, self.needed_part_of_alphabet, self.size, self.menu)
+        self.win_inspector = Win_inspector(self.needed_part_of_alphabet, self.size, {"user": self.user_char, "robot": robot_char})
 
 
     def play(self):
-        player_value = "X"
+        player_value = self.user_char
         someone_won = False
         who_won = None
         while "." in self.board_record.values() and not someone_won:
@@ -40,12 +43,12 @@ class Game:
             player_value = "O" if player_value == "X" else "X"
             who_won = self.win_inspector.check_if_someone_wins(self.board_record)
             someone_won = who_won is not None
-        self.menu.finish_game(who_won, self.needed_part_of_alphabet, self.board_record)
+        self.menu.finish_game(None if who_won is None else ("user" if who_won == self.user_char else "robot"), self.needed_part_of_alphabet, self.board_record)
 
 
     def play_one_round(self, player_value):
-        if player_value == "X":
-            self.player.player_move(self.needed_part_of_alphabet, self.board_record)
+        if player_value == self.user_char:
+            self.player.player_move(self.board_record)
         else:
             self.robot_round()
 

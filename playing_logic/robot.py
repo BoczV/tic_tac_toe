@@ -3,6 +3,7 @@ import random
 
 class Robot:
     player_value = None
+    opponent_value = None
     possible_winning_options = []
     corners = []
     needed_part_of_alphabet = None
@@ -12,6 +13,7 @@ class Robot:
 
     def __init__(self, player_value, needed_part_of_alphabet, size, menu):
         self.player_value = player_value
+        self.opponent_value = "X" if player_value == "O" else "O"
         self.menu = menu
         self.needed_part_of_alphabet = needed_part_of_alphabet
         self.size = size
@@ -124,7 +126,7 @@ class Robot:
 
 
     def find_a_possible_path_to_block(self, board_record):
-        return self.find_a_path(board_record, "X")
+        return self.find_a_path(board_record, self.opponent_value)
 
 
     def find_a_path(self, board_record, player_value):
@@ -140,7 +142,7 @@ class Robot:
 
 
     def find_a_dangerous_path_to_block(self, board_record):
-        return self.find_a_serious_path(board_record, "X")
+        return self.find_a_serious_path(board_record, self.opponent_value)
 
 
     def find_a_promising_path_to_move(self, board_record):

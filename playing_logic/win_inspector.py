@@ -4,10 +4,10 @@ class Win_inspector:
     needed_part_of_alphabet = None
     size = 0
 
-    def __init__(self, needed_part_of_alphabet, size):
+    def __init__(self, needed_part_of_alphabet, size, value_switcher):
         self.needed_part_of_alphabet = needed_part_of_alphabet
         self.size = size
-        self.value_switcher = {"user": "X", "robot": "O"}
+        self.value_switcher = value_switcher
 
 
     def check_if_actor_wins(self, player_value, board_record):
