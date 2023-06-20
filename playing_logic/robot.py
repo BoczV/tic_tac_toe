@@ -1,5 +1,4 @@
 import random
-from interface.menu import Menu
 
 
 class Robot:
@@ -9,6 +8,7 @@ class Robot:
     needed_part_of_alphabet = None
     menu = None
     size = 0
+    user_wants_to_continue_answer = None
 
     def __init__(self, player_value, needed_part_of_alphabet, size, menu):
         self.player_value = player_value
@@ -80,7 +80,14 @@ class Robot:
                         random_key = random.choice([element for element in possible_path_to_block if element in available_places])
                         board_record[random_key] = self.player_value
                     else:
-                        self.robot_move_easy_level(board_record)
+                        if self.user_wants_to_continue_answer is None:
+                            self.user_wants_to_continue_answer = self.menu.get_continue_answer()
+                            if self.user_wants_to_continue_answer == "y":
+                                self.robot_move_easy_level(board_record)
+                            else:
+                                self.menu.exit_program()
+                        else:
+                            self.robot_move_easy_level(board_record)
 
 
     def robot_move_impossible_level(self, board_record):

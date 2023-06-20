@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 from interface.board_drawer import Board_drawer
 from interface.colors import bcolors
@@ -122,3 +123,30 @@ class Menu:
         os.system('clear')
         difficulty_level = self.ask_difficulty_level(False)
         return self.check_difficulty_level_answer(difficulty_level)
+    
+
+    def ask_continue_answer(self, previous_failed_try):
+        if previous_failed_try:
+            print("Wrong input!")
+        print("Robot: It's pointless to continue, none of us can win.")
+        return input("Would you like to continue? (Y/N) ")
+
+
+    def check_continue_answer(self, continue_answer):
+        con_answer = continue_answer
+
+        while con_answer.lower() != "y" and con_answer.lower() != "n":
+            os.system('clear')
+            con_answer = self.ask_continue_answer(True)
+        return con_answer
+
+
+    def get_continue_answer(self):
+        os.system('clear')
+        continue_answer = self.ask_continue_answer(False)
+        return self.check_continue_answer(continue_answer)
+
+
+    def exit_program(self):
+        print("Ok, bye!")
+        sys.exit()
