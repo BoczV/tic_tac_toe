@@ -81,5 +81,6 @@ class Game:
             self.setup()
             self.difficulty_level = self.menu.get_difficulty_level()
             self.play()
+            self.menu.get_new_game_answer()
         else:
             print("Okay, bye!")
