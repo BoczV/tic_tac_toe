@@ -191,6 +191,5 @@ class Menu:
 
 
     def get_new_game_answer(self):
-        os.system(self.os_command)
         new_game_answer = self.ask_new_game_answer(False)
         return self.check_new_game_answer(new_game_answer)
