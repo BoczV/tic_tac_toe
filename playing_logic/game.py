@@ -1,5 +1,6 @@
 import os
 import string
+import platform
 
 from interface.menu import Menu
 from playing_logic.robot import Robot
@@ -7,7 +8,7 @@ from playing_logic.player import Player
 from playing_logic.win_inspector import Win_inspector
 
 class Game:
-    board_size_swithcer = {"a": 3, "b": 5, "c": 7}
+    board_size_switcher = {"a": 3, "b": 5, "c": 7}
     alphabet = list(string.ascii_lowercase)
     board_record = {}
     needed_part_of_alphabet = []
@@ -18,14 +19,16 @@ class Game:
     size = 0
     difficulty_level = None
     user_char = None
+    op_system = None
 
     def __init__(self):
-        self.menu = Menu()
+        self.op_system = platform.system()
+        self.menu = Menu(self.op_system)
 
 
     def setup(self):
         board_size_char = self.menu.get_game_board_size_answer()
-        self.size = self.board_size_swithcer[board_size_char]
+        self.size = self.board_size_switcher[board_size_char]
         self.user_char = self.menu.get_character_answer().upper()
         self.init_board_record()
         robot_char = "O" if self.user_char == "X" else "X"
@@ -73,7 +76,7 @@ class Game:
 
     def start_game(self):
         start_answer = self.menu.get_start_answer()
-        os.system('clear')
+        os.system('clear' if self.op_system != "Windows" else 'cls')
         if start_answer == "y":
             self.setup()
             self.difficulty_level = self.menu.get_difficulty_level()

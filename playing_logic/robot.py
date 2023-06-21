@@ -17,10 +17,10 @@ class Robot:
         self.menu = menu
         self.needed_part_of_alphabet = needed_part_of_alphabet
         self.size = size
-        self.setup_informations_for_robot()
+        self.setup_information_for_robot()
 
 
-    def setup_informations_for_robot(self):
+    def setup_information_for_robot(self):
         for i in range(1, self.size + 1):
             possible_winning_option = []
             for j in range(self.size):

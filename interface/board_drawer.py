@@ -1,4 +1,4 @@
-from interface.colors import bcolors
+from interface.colors import Colors
 
 
 class Board_drawer:
@@ -26,7 +26,7 @@ class Board_drawer:
             part_of_row = ""
             for j in part_of_alphabet:
                 element = board[(j + str(helper_index))]
-                colored_element = bcolors.OKBLUE + element + bcolors.ENDC if element == "X" else (bcolors.WARNING + element + bcolors.ENDC if element == "O" else element)
+                colored_element = Colors.OKBLUE + element + Colors.ENDC if element == "X" else (Colors.WARNING + element + Colors.ENDC if element == "O" else element)
                 part_of_row += f"| {colored_element} "
             row = f"{line_identifier}{part_of_row}|"
             print(row)
