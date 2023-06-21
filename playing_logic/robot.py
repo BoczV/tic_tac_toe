@@ -4,8 +4,8 @@ import random
 class Robot:
     player_value = None
     opponent_value = None
-    possible_winning_options = []
-    corners = []
+    possible_winning_options = None
+    corners = None
     needed_part_of_alphabet = None
     menu = None
     size = 0
@@ -21,6 +21,7 @@ class Robot:
 
 
     def setup_information_for_robot(self):
+        self.possible_winning_options = []
         for i in range(1, self.size + 1):
             possible_winning_option = []
             for j in range(self.size):
@@ -45,6 +46,7 @@ class Robot:
 
 
     def setup_corners(self):
+        self.corners = []
         self.corners.append(f"{self.needed_part_of_alphabet[0]}{1}")
         self.corners.append(f"{self.needed_part_of_alphabet[self.size - 1]}{1}")
         self.corners.append(f"{self.needed_part_of_alphabet[0]}{self.size}")

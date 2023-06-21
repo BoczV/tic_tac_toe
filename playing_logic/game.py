@@ -10,8 +10,8 @@ from playing_logic.win_inspector import Win_inspector
 class Game:
     board_size_switcher = {"a": 3, "b": 5, "c": 7}
     alphabet = list(string.ascii_lowercase)
-    board_record = {}
-    needed_part_of_alphabet = []
+    board_record = None
+    needed_part_of_alphabet = None
     win_inspector = None
     player = None
     robot = None
@@ -66,6 +66,8 @@ class Game:
 
 
     def init_board_record(self):
+        self.board_record = {}
+        self.needed_part_of_alphabet = []
         for i in range(self.size):
             letter = self.alphabet[i]
             for j in range(1, self.size + 1):
@@ -81,6 +83,10 @@ class Game:
             self.setup()
             self.difficulty_level = self.menu.get_difficulty_level()
             self.play()
-            self.menu.get_new_game_answer()
+            restart_answer = self.menu.get_new_game_answer()
+            if restart_answer == "y":
+                self.start_game()
+            else:
+                print("Okay, bye!")
         else:
             print("Okay, bye!")

@@ -182,11 +182,11 @@ class Menu:
 
 
     def check_new_game_answer(self, new_game_answer):
-        n_game_answer = new_game_answer
+        n_game_answer = new_game_answer.lower()
 
-        while n_game_answer.lower() != "y" and n_game_answer.lower() != "n":
+        while n_game_answer != "y" and n_game_answer != "n":
             os.system(self.os_command)
-            n_game_answer = self.ask_new_game_answer(True)
+            n_game_answer = self.ask_new_game_answer(True).lower()
         return n_game_answer
 
 
