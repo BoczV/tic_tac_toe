@@ -18,6 +18,7 @@ class Robot:
         self.needed_part_of_alphabet = needed_part_of_alphabet
         self.size = size
         self.setup_information_for_robot()
+        self.setup_corners()
 
 
     def setup_information_for_robot(self):
@@ -42,7 +43,6 @@ class Robot:
 
         self.possible_winning_options.append(possible_winning_option1)
         self.possible_winning_options.append(possible_winning_option2)
-        self.setup_corners()
 
 
     def setup_corners(self):
