@@ -8,4 +8,6 @@ The rules are straightforward: two players take turns marking Xs and Os on a 3x3
 
 While its concept may be simple, the game hides a world of possibilities and tactics waiting to be discovered. Will you choose to go on the offensive, relentlessly pursuing victory, or adopt a more defensive approach, thwarting your opponent's plans at every turn? Each match is a unique puzzle, challenging your wits and sharpening your ability to foresee the consequences of each move.
 
+Tic-tac-toe is the perfect game for those seeking a quick burst of excitement or a leisurely brain-teasing experience. Get ready to immerse yourself in a timeless classic that never fails to captivate and entertain.
+
 ![alt text](https://www.rd.com/wp-content/uploads/2019/10/tic-tac-toe-scaled.jpg?resize=2048)
