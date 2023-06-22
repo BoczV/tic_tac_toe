@@ -1,6 +1,3 @@
-from interface.menu import Menu
-
-
 class Player:
     player_value = None
     menu = None
