@@ -10,7 +10,7 @@ class Win_inspector:
         self.value_switcher = value_switcher
 
 
-    def check_if_actor_wins(self, player_value: str, board_record: dict):
+    def check_if_actor_wins(self, player_value: str, board_record: dict) -> bool:
         if self.check_if_someone_wins_horizontally(player_value, board_record):
             return True
         elif self.check_if_someone_wins_vertically(player_value, board_record):
@@ -20,7 +20,7 @@ class Win_inspector:
         return False
 
 
-    def check_if_someone_wins(self, board_record: dict):
+    def check_if_someone_wins(self, board_record: dict) -> bool:
         result = None
         if self.check_if_actor_wins(self.value_switcher["user"], board_record):
             result = self.value_switcher["user"]
@@ -29,7 +29,7 @@ class Win_inspector:
         return result
 
 
-    def check_if_someone_wins_vertically(self, player_value: str, board_record: dict):
+    def check_if_someone_wins_vertically(self, player_value: str, board_record: dict) -> bool:
         counter = 0
         for i in self.needed_part_of_alphabet:
             for j in range(1, self.size + 1):
@@ -43,7 +43,7 @@ class Win_inspector:
         return False
 
 
-    def check_if_someone_wins_horizontally(self, player_value: str, board_record: dict):
+    def check_if_someone_wins_horizontally(self, player_value: str, board_record: dict) -> bool:
         counter = 0
         for j in range(1, self.size + 1):
             for i in self.needed_part_of_alphabet:
@@ -57,7 +57,7 @@ class Win_inspector:
         return False
 
 
-    def check_if_someone_wins_cross_diagonally(self, player_value: str, board_record: dict):
+    def check_if_someone_wins_cross_diagonally(self, player_value: str, board_record: dict) -> bool:
         counter1 = 0
         counter2 = 0
         for i in range(self.size):

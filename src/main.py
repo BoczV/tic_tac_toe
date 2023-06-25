@@ -1,6 +1,6 @@
 from playing_logic.game import Game
 
-def main():
+def main() -> None:
     game = Game()
     game.start_game()
 

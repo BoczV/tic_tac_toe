@@ -22,7 +22,7 @@ class Robot:
         self.setup_corners()
 
 
-    def setup_information_for_robot(self):
+    def setup_information_for_robot(self) -> None:
         self.possible_winning_options = []
         for i in range(1, self.size + 1):
             possible_winning_option = []
@@ -46,7 +46,7 @@ class Robot:
         self.possible_winning_options.append(possible_winning_option2)
 
 
-    def setup_corners(self):
+    def setup_corners(self) -> None:
         self.corners = []
         self.corners.append(f"{self.needed_part_of_alphabet[0]}{1}")
         self.corners.append(f"{self.needed_part_of_alphabet[self.size - 1]}{1}")
@@ -54,14 +54,14 @@ class Robot:
         self.corners.append(f"{self.needed_part_of_alphabet[self.size - 1]}{self.size}")
 
 
-    def robot_move_easy_level(self, board_record: dict):
+    def robot_move_easy_level(self, board_record: dict) -> None:
         available_places = self.find_available_places(board_record)
         self.menu.robot_makes_a_move(self.needed_part_of_alphabet, board_record)
         random_key = random.choice(available_places)
         board_record[random_key] = self.player_value
 
 
-    def robot_move_medium_level(self, board_record: dict, received_available_places: list):
+    def robot_move_medium_level(self, board_record: dict, received_available_places: list) -> None:
         self.menu.robot_makes_a_move(self.needed_part_of_alphabet, board_record)
         available_places = self.find_available_places(board_record) if received_available_places is None else received_available_places
         possible_blocking_option_for_danger = self.find_a_dangerous_path_to_block(board_record)
@@ -95,7 +95,7 @@ class Robot:
                             self.robot_move_easy_level(board_record)
 
 
-    def robot_move_impossible_level(self, board_record: dict):
+    def robot_move_impossible_level(self, board_record: dict) -> None:
         self.menu.robot_makes_a_move(self.needed_part_of_alphabet, board_record)
         available_places = self.find_available_places(board_record)
         if len(available_places) == self.size * self.size - 1:
@@ -109,14 +109,14 @@ class Robot:
             self.robot_move_medium_level(board_record, available_places)
 
 
-    def find_available_places_in_corner(self, available_places: list, board_record: dict):
+    def find_available_places_in_corner(self, available_places: list, board_record: dict) -> None:
         for element in available_places:
             if element in self.corners:
                 board_record[element] = self.player_value
                 break
 
 
-    def find_available_places(self, board_record: dict):
+    def find_available_places(self, board_record: dict) -> list:
         result = []
         for i, j in board_record.items():
             if j == ".":
@@ -124,15 +124,15 @@ class Robot:
         return result
 
 
-    def find_a_good_path_to_move(self, board_record: dict):
+    def find_a_good_path_to_move(self, board_record: dict) -> list:
         return self.find_a_path(board_record, self.player_value)
 
 
-    def find_a_possible_path_to_block(self, board_record: dict):
+    def find_a_possible_path_to_block(self, board_record: dict) -> list:
         return self.find_a_path(board_record, self.opponent_value)
 
 
-    def find_a_path(self, board_record: dict, player_value: str):
+    def find_a_path(self, board_record: dict, player_value: str) -> list:
         for possible_winning_option in self.possible_winning_options:
             counter = 0
             for j in possible_winning_option:
@@ -144,15 +144,15 @@ class Robot:
         return []
 
 
-    def find_a_dangerous_path_to_block(self, board_record: dict):
+    def find_a_dangerous_path_to_block(self, board_record: dict) -> list:
         return self.find_a_serious_path(board_record, self.opponent_value)
 
 
-    def find_a_promising_path_to_move(self, board_record: dict):
+    def find_a_promising_path_to_move(self, board_record: dict) -> list:
         return self.find_a_serious_path(board_record, self.player_value)
 
 
-    def find_a_serious_path(self, board_record: dict, player_value: str):
+    def find_a_serious_path(self, board_record: dict, player_value: str) -> list:
         for possible_winning_option in self.possible_winning_options:
             counter = 0
             user_counter = 0

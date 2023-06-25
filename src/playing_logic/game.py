@@ -26,7 +26,7 @@ class Game:
         self.menu = Menu(self.op_system)
 
 
-    def setup(self):
+    def setup(self) -> None:
         board_size_char = self.menu.get_game_board_size_answer()
         self.size = self.board_size_switcher[board_size_char]
         self.user_char = self.menu.get_character_answer().upper()
@@ -37,7 +37,7 @@ class Game:
         self.win_inspector = Win_inspector(self.needed_part_of_alphabet, self.size, {"user": self.user_char, "robot": robot_char})
 
 
-    def play(self):
+    def play(self) -> None:
         player_value = self.user_char
         someone_won = False
         who_won = None
@@ -49,14 +49,14 @@ class Game:
         self.menu.finish_game(None if who_won is None else ("user" if who_won == self.user_char else "robot"), self.needed_part_of_alphabet, self.board_record)
 
 
-    def play_one_round(self, player_value: str):
+    def play_one_round(self, player_value: str) -> None:
         if player_value == self.user_char:
             self.player.player_move(self.board_record)
         else:
             self.robot_round()
 
 
-    def robot_round(self):
+    def robot_round(self) -> None:
         if self.difficulty_level == "a":
                 self.robot.robot_move_easy_level(self.board_record)
         elif self.difficulty_level == "b":
@@ -65,7 +65,7 @@ class Game:
             self.robot.robot_move_impossible_level(self.board_record)
 
 
-    def init_board_record(self):
+    def init_board_record(self) -> None:
         self.board_record = {}
         self.needed_part_of_alphabet = []
         for i in range(self.size):
@@ -76,7 +76,7 @@ class Game:
             self.needed_part_of_alphabet.append(letter)
 
 
-    def start_game(self):
+    def start_game(self) -> None:
         start_answer = self.menu.get_start_answer()
         os.system('clear' if self.op_system != "Windows" else 'cls')
         if start_answer == "y":
