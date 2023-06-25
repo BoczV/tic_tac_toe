@@ -6,7 +6,7 @@ class Board_drawer:
         pass
 
 
-    def draw_header(self, part_of_alphabet):
+    def draw_header(self, part_of_alphabet: list):
         line_identifier = "0. "
         header = f"{line_identifier}"
         
@@ -18,7 +18,7 @@ class Board_drawer:
         self.draw_separator(line_identifier, len(part_of_alphabet))
 
 
-    def draw_body(self, part_of_alphabet, board):
+    def draw_body(self, part_of_alphabet: list, board: dict):
         row = ""
         for i in range(len(part_of_alphabet)):
             helper_index = i + 1
@@ -33,12 +33,12 @@ class Board_drawer:
         self.draw_separator(line_identifier, len(part_of_alphabet))
 
 
-    def draw_separator(self, line_identifier, size):
+    def draw_separator(self, line_identifier: str, size: int):
         len_line_identifier = len(line_identifier)
         length_of_dashes = size * 4 + 1
         print(" " * len_line_identifier + "-" * length_of_dashes)
 
 
-    def draw_board(self, part_of_alphabet, board):
+    def draw_board(self, part_of_alphabet: list, board: dict):
         self.draw_header(part_of_alphabet)
         self.draw_body(part_of_alphabet, board)

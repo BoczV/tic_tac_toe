@@ -1,17 +1,18 @@
 import random
+from interface.menu import Menu
 
 
 class Robot:
-    player_value = None
-    opponent_value = None
-    possible_winning_options = None
-    corners = None
-    needed_part_of_alphabet = None
-    menu = None
-    size = 0
-    user_wants_to_continue_answer = None
+    player_value: str = None
+    opponent_value: str = None
+    possible_winning_options: list = None
+    corners: list = None
+    needed_part_of_alphabet: list = None
+    menu: Menu = None
+    size: int = 0
+    user_wants_to_continue_answer: str = None
 
-    def __init__(self, player_value, needed_part_of_alphabet, size, menu):
+    def __init__(self, player_value: str, needed_part_of_alphabet: list, size: int, menu: Menu):
         self.player_value = player_value
         self.opponent_value = "X" if player_value == "O" else "O"
         self.menu = menu
@@ -53,14 +54,14 @@ class Robot:
         self.corners.append(f"{self.needed_part_of_alphabet[self.size - 1]}{self.size}")
 
 
-    def robot_move_easy_level(self, board_record):
+    def robot_move_easy_level(self, board_record: dict):
         available_places = self.find_available_places(board_record)
         self.menu.robot_makes_a_move(self.needed_part_of_alphabet, board_record)
         random_key = random.choice(available_places)
         board_record[random_key] = self.player_value
 
 
-    def robot_move_medium_level(self, board_record, received_available_places):
+    def robot_move_medium_level(self, board_record: dict, received_available_places: list):
         self.menu.robot_makes_a_move(self.needed_part_of_alphabet, board_record)
         available_places = self.find_available_places(board_record) if received_available_places is None else received_available_places
         possible_blocking_option_for_danger = self.find_a_dangerous_path_to_block(board_record)
@@ -94,7 +95,7 @@ class Robot:
                             self.robot_move_easy_level(board_record)
 
 
-    def robot_move_impossible_level(self, board_record):
+    def robot_move_impossible_level(self, board_record: dict):
         self.menu.robot_makes_a_move(self.needed_part_of_alphabet, board_record)
         available_places = self.find_available_places(board_record)
         if len(available_places) == self.size * self.size - 1:
@@ -108,14 +109,14 @@ class Robot:
             self.robot_move_medium_level(board_record, available_places)
 
 
-    def find_available_places_in_corner(self, available_places, board_record):
+    def find_available_places_in_corner(self, available_places: list, board_record: dict):
         for element in available_places:
             if element in self.corners:
                 board_record[element] = self.player_value
                 break
 
 
-    def find_available_places(self, board_record):
+    def find_available_places(self, board_record: dict):
         result = []
         for i, j in board_record.items():
             if j == ".":
@@ -123,15 +124,15 @@ class Robot:
         return result
 
 
-    def find_a_good_path_to_move(self, board_record):
+    def find_a_good_path_to_move(self, board_record: dict):
         return self.find_a_path(board_record, self.player_value)
 
 
-    def find_a_possible_path_to_block(self, board_record):
+    def find_a_possible_path_to_block(self, board_record: dict):
         return self.find_a_path(board_record, self.opponent_value)
 
 
-    def find_a_path(self, board_record, player_value):
+    def find_a_path(self, board_record: dict, player_value: str):
         for possible_winning_option in self.possible_winning_options:
             counter = 0
             for j in possible_winning_option:
@@ -143,15 +144,15 @@ class Robot:
         return []
 
 
-    def find_a_dangerous_path_to_block(self, board_record):
+    def find_a_dangerous_path_to_block(self, board_record: dict):
         return self.find_a_serious_path(board_record, self.opponent_value)
 
 
-    def find_a_promising_path_to_move(self, board_record):
+    def find_a_promising_path_to_move(self, board_record: dict):
         return self.find_a_serious_path(board_record, self.player_value)
 
 
-    def find_a_serious_path(self, board_record, player_value):
+    def find_a_serious_path(self, board_record: dict, player_value: str):
         for possible_winning_option in self.possible_winning_options:
             counter = 0
             user_counter = 0

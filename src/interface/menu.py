@@ -5,17 +5,17 @@ from interface.board_drawer import Board_drawer
 from interface.colors import Colors
 
 class Menu:
-    good_board_size_answers = ['a', 'b', 'c']
-    good_diff_answers = ["a", "b", "c"]
-    board_drawer = None
-    os_command = None
+    good_board_size_answers: list = ['a', 'b', 'c']
+    good_diff_answers: list = ["a", "b", "c"]
+    board_drawer: Board_drawer = None
+    os_command: str = None
 
-    def __init__(self, op_system):
+    def __init__(self, op_system: str):
         self.os_command = 'clear' if op_system != "Windows" else 'cls'
         self.board_drawer = Board_drawer()
 
 
-    def welcome_message(self, previous_failed_try):
+    def welcome_message(self, previous_failed_try: bool):
         os.system(self.os_command)
         print("TIC-TAC-TO")
         if previous_failed_try:
@@ -31,7 +31,7 @@ class Menu:
         return start.lower()
 
 
-    def ask_game_board_size(self, previous_failed_try):
+    def ask_game_board_size(self, previous_failed_try: bool):
         if previous_failed_try:
             print("Wrong input!")
         print("How many rows and columns do you want?")
@@ -39,7 +39,7 @@ class Menu:
         return input("Which one would you choose? (a, b, c) ")
 
 
-    def check_game_board_size_answer(self, game_board_size_answer):
+    def check_game_board_size_answer(self, game_board_size_answer: str):
         next_size_answer = game_board_size_answer
         while next_size_answer.lower() not in self.good_board_size_answers:
             os.system(self.os_command)
@@ -52,7 +52,7 @@ class Menu:
         return self.check_game_board_size_answer(game_board_size_answer)
 
 
-    def ask_to_make_a_step(self, previous_failed_try, already_taken):
+    def ask_to_make_a_step(self, previous_failed_try: bool, already_taken: bool):
         if previous_failed_try:
             print("Wrong input!")
         elif already_taken:
@@ -60,7 +60,7 @@ class Menu:
         return input("Make a step (Like a1/b2/c3): ")
 
 
-    def check_step_answer(self, step_answer, needed_part_of_alphabet, board_record):
+    def check_step_answer(self, step_answer: str, needed_part_of_alphabet: list, board_record: dict):
         next_step_answer = step_answer
         not_in_board = next_step_answer.lower() not in board_record.keys()
 
@@ -81,28 +81,28 @@ class Menu:
         return next_step_answer
 
 
-    def get_next_step_answer(self, needed_part_of_alphabet, board_record):
+    def get_next_step_answer(self, needed_part_of_alphabet: list, board_record: dict):
         os.system(self.os_command)
         self.board_drawer.draw_board(needed_part_of_alphabet, board_record)
         step_answer = self.ask_to_make_a_step(False, False)
         return self.check_step_answer(step_answer, needed_part_of_alphabet, board_record)
 
 
-    def robot_makes_a_move(self, needed_part_of_alphabet, board_record):
+    def robot_makes_a_move(self, needed_part_of_alphabet: list, board_record: dict):
         os.system(self.os_command)
         self.board_drawer.draw_board(needed_part_of_alphabet, board_record)
         print("Robot turn...")
         time.sleep(1)
 
 
-    def finish_game(self, who_won, needed_part_of_alphabet, board_record):
+    def finish_game(self, who_won: str, needed_part_of_alphabet: list, board_record: dict):
         os.system(self.os_command)
         self.board_drawer.draw_board(needed_part_of_alphabet, board_record)
         result = Colors.HEADER + "Tie!" + Colors.END if who_won is None else (Colors.GREEN + "User won!" + Colors.END if who_won == "user" else Colors.FAIL + "Robot won!" + Colors.END)
         print("Finished game! " + result)
 
 
-    def ask_difficulty_level(self, previous_failed_try):
+    def ask_difficulty_level(self, previous_failed_try: bool):
         if previous_failed_try:
             print("Wrong input!")
         print("Difficulty levels: ")
@@ -112,7 +112,7 @@ class Menu:
         return input("Choose one (a/b/c): ")
 
 
-    def check_difficulty_level_answer(self, difficulty_answer):
+    def check_difficulty_level_answer(self, difficulty_answer: str):
         diff_answer = difficulty_answer
 
         while diff_answer not in self.good_diff_answers:
@@ -127,14 +127,14 @@ class Menu:
         return self.check_difficulty_level_answer(difficulty_level)
     
 
-    def ask_continue_answer(self, previous_failed_try):
+    def ask_continue_answer(self, previous_failed_try: bool):
         if previous_failed_try:
             print("Wrong input!")
         print("Robot: It's pointless to continue, none of us could win.")
         return input("Would you like to continue? (Y/N) ")
 
 
-    def check_continue_answer(self, continue_answer):
+    def check_continue_answer(self, continue_answer: str):
         con_answer = continue_answer
 
         while con_answer.lower() != "y" and con_answer.lower() != "n":
@@ -154,13 +154,13 @@ class Menu:
         sys.exit()
     
 
-    def ask_character_answer(self, previous_failed_try):
+    def ask_character_answer(self, previous_failed_try: bool):
         if previous_failed_try:
             print("Wrong input!")
         return input("Which character do you choose? (X/O) ")
 
 
-    def check_character_answer(self, character_answer):
+    def check_character_answer(self, character_answer: str):
         char_answer = character_answer
 
         while char_answer.lower() != "x" and char_answer.lower() != "o":
@@ -175,13 +175,13 @@ class Menu:
         return self.check_character_answer(char_answer)
     
 
-    def ask_new_game_answer(self, previous_failed_try):
+    def ask_new_game_answer(self, previous_failed_try: bool):
         if previous_failed_try:
             print("Wrong input!")
         return input("Start again? (Y/N) ")
 
 
-    def check_new_game_answer(self, new_game_answer):
+    def check_new_game_answer(self, new_game_answer: str):
         n_game_answer = new_game_answer.lower()
 
         while n_game_answer != "y" and n_game_answer != "n":

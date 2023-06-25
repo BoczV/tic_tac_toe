@@ -8,18 +8,18 @@ from playing_logic.player import Player
 from playing_logic.win_inspector import Win_inspector
 
 class Game:
-    board_size_switcher = {"a": 3, "b": 5, "c": 7}
-    alphabet = list(string.ascii_lowercase)
-    board_record = None
-    needed_part_of_alphabet = None
-    win_inspector = None
-    player = None
-    robot = None
-    menu = None
-    size = 0
-    difficulty_level = None
-    user_char = None
-    op_system = None
+    board_size_switcher: dict = {"a": 3, "b": 5, "c": 7}
+    alphabet: list = list(string.ascii_lowercase)
+    board_record: dict = None
+    needed_part_of_alphabet: list = None
+    win_inspector: Win_inspector = None
+    player: Player = None
+    robot: Robot = None
+    menu: Menu = None
+    size: int = 0
+    difficulty_level: str = None
+    user_char: str = None
+    op_system: str = None
 
     def __init__(self):
         self.op_system = platform.system()
@@ -49,7 +49,7 @@ class Game:
         self.menu.finish_game(None if who_won is None else ("user" if who_won == self.user_char else "robot"), self.needed_part_of_alphabet, self.board_record)
 
 
-    def play_one_round(self, player_value):
+    def play_one_round(self, player_value: str):
         if player_value == self.user_char:
             self.player.player_move(self.board_record)
         else:
