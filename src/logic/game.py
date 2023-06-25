@@ -3,9 +3,9 @@ import string
 import platform
 
 from interface.menu import Menu
-from playing_logic.robot import Robot
-from playing_logic.player import Player
-from playing_logic.win_inspector import Win_inspector
+from logic.robot import Robot
+from logic.player import Player
+from logic.win_inspector import Win_inspector
 
 class Game:
     board_size_switcher: dict = {"a": 3, "b": 5, "c": 7}

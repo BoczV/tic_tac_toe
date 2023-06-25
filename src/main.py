@@ -1,4 +1,4 @@
-from playing_logic.game import Game
+from logic.game import Game
 
 def main() -> None:
     game = Game()
