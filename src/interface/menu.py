@@ -132,15 +132,15 @@ class Menu:
 
     def check_continue_answer(self, continue_answer: str) -> str:
         con_answer = continue_answer
-        while con_answer.lower() != "y" and con_answer.lower() != "n":
+        while con_answer != "y" and con_answer != "n":
             os.system(self.os_command)
-            con_answer = self.ask_continue_answer(True)
+            con_answer = self.ask_continue_answer(True).lower()
         return con_answer
 
 
     def get_continue_answer(self) -> str:
         os.system(self.os_command)
-        continue_answer = self.ask_continue_answer(False)
+        continue_answer = self.ask_continue_answer(False).lower()
         return self.check_continue_answer(continue_answer)
 
 
