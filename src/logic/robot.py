@@ -181,12 +181,13 @@ class Robot:
     def find_an_instant_winner_path(self, board_record: dict) -> list:
         for possible_winning_option in self.possible_winning_options:
             counter = 0
+            opponent_counter = 0
             for i in possible_winning_option:
                 element = board_record[i]
                 if element == self.player_value:
                     counter += 1
                 if element == self.opponent_value:
-                    break
-            if counter == self.size - 1:
+                    opponent_counter += 1
+            if counter == self.size - 1 and opponent_counter == 0:
                 return possible_winning_option
         return []
