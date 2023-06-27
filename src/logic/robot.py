@@ -137,15 +137,22 @@ class Robot:
 
 
     def find_a_path(self, board_record: dict, player_value: str) -> list:
+        helper_counter = 0
+        result = []
         for possible_winning_option in self.possible_winning_options:
             counter = 0
+            user_counter = 0
             for j in possible_winning_option:
                 element = board_record[j]
                 if element == "." or element == player_value:
                     counter += 1
+                if element == player_value:
+                    user_counter += 1
             if counter == self.size:
-                return possible_winning_option
-        return []
+                if user_counter > helper_counter:
+                    helper_counter = user_counter
+                    result = possible_winning_option
+        return result
 
 
     def find_a_dangerous_path_to_block(self, board_record: dict) -> list:
@@ -178,6 +185,8 @@ class Robot:
                 element = board_record[i]
                 if element == self.player_value:
                     counter += 1
+                if element == self.opponent_value:
+                    break
             if counter == self.size - 1:
                 return possible_winning_option
         return []
