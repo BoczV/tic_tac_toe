@@ -29,7 +29,7 @@ class Win_inspector:
         return result
 
 
-    def check_if_someone_wins_vertically(self, player_value: str, board_record: dict) -> bool:
+    def check_if_someone_wins_horizontally(self, player_value: str, board_record: dict) -> bool:
         counter = 0
         for i in self.needed_part_of_alphabet:
             for j in range(1, self.size + 1):
@@ -43,7 +43,7 @@ class Win_inspector:
         return False
 
 
-    def check_if_someone_wins_horizontally(self, player_value: str, board_record: dict) -> bool:
+    def check_if_someone_wins_vertically(self, player_value: str, board_record: dict) -> bool:
         counter = 0
         for j in range(1, self.size + 1):
             for i in self.needed_part_of_alphabet:
