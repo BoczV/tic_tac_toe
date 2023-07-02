@@ -17,7 +17,6 @@ class Game:
     robot: Robot = None
     menu: Menu = None
     size: int = 0
-    difficulty_level: str = None
     user_char: str = None
     op_system: str = None
 
@@ -31,9 +30,10 @@ class Game:
         self.size = self.board_size_switcher[board_size_char]
         self.user_char = self.menu.get_character_answer().upper()
         self.init_board_record()
+        difficulty_level = self.menu.get_difficulty_level()
         robot_char = "O" if self.user_char == "X" else "X"
         self.player = Player(self.user_char, self.menu, self.needed_part_of_alphabet)
-        self.robot = Robot(robot_char, self.needed_part_of_alphabet, self.size, self.menu)
+        self.robot = Robot(robot_char, difficulty_level, self.needed_part_of_alphabet, self.size, self.menu)
         self.win_inspector = Win_inspector(self.needed_part_of_alphabet, self.size, {"user": self.user_char, "robot": robot_char})
 
 
@@ -53,16 +53,7 @@ class Game:
         if player_value == self.user_char:
             self.player.player_move(self.board_record)
         else:
-            self.robot_round()
-
-
-    def robot_round(self) -> None:
-        if self.difficulty_level == "a":
-                self.robot.robot_move_easy_level(self.board_record)
-        elif self.difficulty_level == "b":
-            self.robot.robot_move_medium_level(self.board_record, None)
-        else:
-            self.robot.robot_move_impossible_level(self.board_record)
+            self.robot.robot_move(self.board_record)
 
 
     def init_board_record(self) -> None:
@@ -81,7 +72,6 @@ class Game:
         os.system('clear' if self.op_system != "Windows" else 'cls')
         if start_answer == "y":
             self.setup()
-            self.difficulty_level = self.menu.get_difficulty_level()
             self.play()
             restart_answer = self.menu.get_new_game_answer()
             if restart_answer == "y":

@@ -10,14 +10,16 @@ class Robot:
     needed_part_of_alphabet: list = None
     menu: Menu = None
     size: int = 0
+    difficulty_level: str = None
     user_wants_to_continue_answer: str = None
 
-    def __init__(self, player_value: str, needed_part_of_alphabet: list, size: int, menu: Menu):
+    def __init__(self, player_value: str, difficulty_level: str, needed_part_of_alphabet: list, size: int, menu: Menu):
         self.player_value = player_value
         self.opponent_value = "X" if player_value == "O" else "O"
         self.menu = menu
         self.needed_part_of_alphabet = needed_part_of_alphabet
         self.size = size
+        self.difficulty_level = difficulty_level
         self.setup_information_for_robot()
         self.setup_corners()
 
@@ -52,6 +54,15 @@ class Robot:
         self.corners.append(f"{self.needed_part_of_alphabet[self.size - 1]}{1}")
         self.corners.append(f"{self.needed_part_of_alphabet[0]}{self.size}")
         self.corners.append(f"{self.needed_part_of_alphabet[self.size - 1]}{self.size}")
+
+
+    def robot_move(self, board_record: dict):
+        if self.difficulty_level == "a":
+                self.robot_move_easy_level(board_record)
+        elif self.difficulty_level == "b":
+            self.robot_move_medium_level(board_record, None)
+        else:
+            self.robot_move_impossible_level(board_record)
 
 
     def robot_move_easy_level(self, board_record: dict) -> None:
