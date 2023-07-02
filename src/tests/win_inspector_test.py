@@ -1,5 +1,4 @@
 import pytest
-import pdb
 from ..logic.win_inspector import Win_inspector
 
 class Test_Win_inspector:
@@ -39,6 +38,15 @@ class Test_Win_inspector:
             "b1": "X", "b2": ".", "b3": ".", 
             "c1": "X", "c2": "X", "c3": "."
             }
+    
+
+    @pytest.fixture
+    def get_incomplete_board_record(self) -> dict:
+        return {
+            "a1": "O", "a2": ".", "a3": "O", 
+            "b1": "X", "b2": ".", "b3": ".", 
+            "c1": "X", "c2": ".", "c3": "."
+            }
 
 
     def test_check_if_someone_wins_diagonally_returns_true_for_user(self, get_diagonally_board_record: dict):
@@ -69,3 +77,18 @@ class Test_Win_inspector:
     def test_check_if_someone_wins_horizontally_returns_true_for_robot(self, get_horizontally_board_record: dict):
         win = self.win_inspector.check_if_someone_wins_horizontally("O", get_horizontally_board_record)
         assert win is True
+    
+
+    def test_check_if_someone_wins_returns_none(self, get_incomplete_board_record: dict):
+        win = self.win_inspector.check_if_someone_wins(get_incomplete_board_record)
+        assert win is None
+    
+
+    def test_check_if_someone_wins_returns_X(self, get_vertically_board_record: dict):
+        win = self.win_inspector.check_if_someone_wins(get_vertically_board_record)
+        assert win is "X"
+    
+
+    def test_check_if_someone_wins_returns_O(self, get_horizontally_board_record: dict):
+        win = self.win_inspector.check_if_someone_wins(get_horizontally_board_record)
+        assert win is "O"
