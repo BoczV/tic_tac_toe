@@ -1,4 +1,3 @@
-
 class Win_inspector:
     value_switcher: dict = None
     needed_part_of_alphabet: list = None
@@ -22,10 +21,10 @@ class Win_inspector:
 
     def check_if_someone_wins(self, board_record: dict) -> bool:
         result = None
-        if self.check_if_actor_wins(self.value_switcher["user"], board_record):
-            result = self.value_switcher["user"]
-        elif self.check_if_actor_wins(self.value_switcher["robot"], board_record):
-            result = self.value_switcher["robot"]
+        if self.check_if_actor_wins(self.value_switcher["first"], board_record):
+            result = self.value_switcher["first"]
+        elif self.check_if_actor_wins(self.value_switcher["second"], board_record):
+            result = self.value_switcher["second"]
         return result
 
 
