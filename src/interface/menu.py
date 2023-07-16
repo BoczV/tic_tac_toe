@@ -32,6 +32,7 @@ class Menu:
 
 
     def ask_game_board_size(self, previous_failed_try: bool) -> str:
+        os.system(self.os_command)
         if previous_failed_try:
             print("Wrong input!")
         print("How many rows and columns do you want?")
@@ -78,24 +79,25 @@ class Menu:
         return next_step_answer
 
 
-    def get_next_step_answer(self, needed_part_of_alphabet: list, board_record: dict) -> str:
+    def get_next_step_answer(self, user_name: str, needed_part_of_alphabet: list, board_record: dict) -> str:
         os.system(self.os_command)
         self.board_drawer.draw_board(needed_part_of_alphabet, board_record)
+        print(f"{user_name}'s turn")
         step_answer = self.ask_to_make_a_step(False, False)
         return self.check_step_answer(step_answer, needed_part_of_alphabet, board_record)
 
 
-    def robot_makes_a_move(self, needed_part_of_alphabet: list, board_record: dict) -> None:
+    def robot_makes_a_move(self, robot_name: str, needed_part_of_alphabet: list, board_record: dict) -> None:
         os.system(self.os_command)
         self.board_drawer.draw_board(needed_part_of_alphabet, board_record)
-        print("Robot turn...")
+        print(f"{robot_name}'s turn...")
         time.sleep(1)
 
 
     def finish_game(self, who_won: str, needed_part_of_alphabet: list, board_record: dict) -> None:
         os.system(self.os_command)
         self.board_drawer.draw_board(needed_part_of_alphabet, board_record)
-        result = Colors.HEADER + "Tie!" + Colors.END if who_won is None else (Colors.GREEN + "User won!" + Colors.END if who_won == "user" else Colors.FAIL + "Robot won!" + Colors.END)
+        result = Colors.HEADER + "Tie!" + Colors.END if who_won is None else Colors.GREEN + f"{who_won} won!" + Colors.END
         print("Finished game! " + result)
 
 
@@ -149,24 +151,24 @@ class Menu:
         sys.exit()
     
 
-    def ask_character_answer(self, previous_failed_try: bool) -> str:
+    def ask_character_answer(self, previous_failed_try: bool, user_name: str) -> str:
         if previous_failed_try:
             print("Wrong input!")
-        return input("Which character do you choose? (X/O) ")
+        return input(f"Which character do you choose, {user_name}? (X/O) ")
 
 
-    def check_character_answer(self, character_answer: str) -> str:
+    def check_character_answer(self, user_name: str, character_answer: str) -> str:
         char_answer = character_answer
         while char_answer.lower() != "x" and char_answer.lower() != "o":
             os.system(self.os_command)
-            char_answer = self.ask_character_answer(True)
+            char_answer = self.ask_character_answer(True, user_name)
         return char_answer
 
 
-    def get_character_answer(self) -> str:
+    def get_character_answer(self, user_name: str) -> str:
         os.system(self.os_command)
-        char_answer = self.ask_character_answer(False)
-        return self.check_character_answer(char_answer)
+        char_answer = self.ask_character_answer(False, user_name)
+        return self.check_character_answer(user_name, char_answer)
     
 
     def ask_new_game_answer(self, previous_failed_try: bool) -> str:
@@ -186,3 +188,32 @@ class Menu:
     def get_new_game_answer(self) -> str:
         new_game_answer = self.ask_new_game_answer(False)
         return self.check_new_game_answer(new_game_answer)
+    
+
+    def ask_game_mode_answer(self, previous_failed_try: bool) -> str:
+        if previous_failed_try:
+            print("Wrong input!")
+        print("Game modes: ")
+        print("a, Robot vs Robot")
+        print("b, Human vs Robot")
+        print("c, Human vs Human")
+        return input("Which mode do you choose? (a/b/c) ")
+
+
+    def check_game_mode_answer(self, game_mode_answer: str) -> str:
+        g_mode_answer = game_mode_answer.lower()
+        while g_mode_answer not in self.good_diff_answers:
+            os.system(self.os_command)
+            g_mode_answer = self.ask_game_mode_answer(True).lower()
+        return g_mode_answer
+
+
+    def get_game_mode_answer(self) -> str:
+        os.system(self.os_command)
+        game_mode_answer = self.ask_game_mode_answer(False)
+        return self.check_game_mode_answer(game_mode_answer)
+
+
+    def ask_user_name_answer(self, user_string: str) -> str:
+        os.system(self.os_command)
+        return input(f"Tell us your name, {user_string}: ")
