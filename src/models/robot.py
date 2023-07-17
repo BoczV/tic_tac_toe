@@ -1,6 +1,6 @@
 import random
 from interface.menu import Menu
-from logic.player import Player
+from models.player import Player
 
 class Robot(Player):
     opponent_value: str = None
@@ -48,11 +48,13 @@ class Robot(Player):
 
 
     def setup_corners(self) -> None:
+        last_element = self.needed_part_of_alphabet[self.size - 1]
+        first_element = self.needed_part_of_alphabet[0]
         self.corners = []
-        self.corners.append(f"{self.needed_part_of_alphabet[0]}{1}")
-        self.corners.append(f"{self.needed_part_of_alphabet[self.size - 1]}{1}")
-        self.corners.append(f"{self.needed_part_of_alphabet[0]}{self.size}")
-        self.corners.append(f"{self.needed_part_of_alphabet[self.size - 1]}{self.size}")
+        self.corners.append(f"{first_element}{1}")
+        self.corners.append(f"{last_element}{1}")
+        self.corners.append(f"{first_element}{self.size}")
+        self.corners.append(f"{last_element}{self.size}")
 
 
     def move(self, board_record: dict) -> None:
@@ -116,7 +118,9 @@ class Robot(Player):
         else:
             self.menu.robot_makes_a_move(self.player_name, self.needed_part_of_alphabet, board_record)
             available_places = self.find_available_places(board_record)
-            if len(available_places) == self.size * self.size or len(available_places) == self.size * self.size -1:
+            matrix = self.size * self.size
+            len_of_avail_places = len(available_places)
+            if len_of_avail_places == matrix or len_of_avail_places == matrix - 1:
                 half = self.size // 2 + 1
                 key = f"{self.needed_part_of_alphabet[half - 1]}{half}"
                 if key in available_places:

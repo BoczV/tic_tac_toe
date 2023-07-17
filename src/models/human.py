@@ -1,5 +1,5 @@
 from interface.menu import Menu
-from logic.player import Player
+from models.player import Player
 
 class Human(Player):
 
