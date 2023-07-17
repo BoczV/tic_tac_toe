@@ -4,9 +4,9 @@ import platform
 import random
 
 from interface.menu import Menu
-from logic.robot import Robot
-from logic.human import Human
-from logic.player import Player
+from models.robot import Robot
+from models.human import Human
+from models.player import Player
 from logic.win_inspector import Win_inspector
 
 class Game:
