@@ -3,64 +3,64 @@ from interface.menu import Menu
 from models.player import Player
 
 class Robot(Player):
-    opponent_value: str = None
-    opponent_type: str = None
-    possible_winning_options: list = None
-    corners: list = None
-    size: int = 0
-    difficulty_level: str = None
-    user_wants_to_continue_answer: str = None
-    robot_started_to_guess_randomly: bool = False
+    __opponent_value: str = None
+    __opponent_type: str = None
+    __possible_winning_options: list = None
+    __corners: list = None
+    __size: int = 0
+    __difficulty_level: str = None
+    __user_wants_to_continue_answer: str = None
+    __robot_started_to_guess_randomly: bool = False
 
 
     def __init__(self, player_value: str, player_name: str, difficulty_level: str, needed_part_of_alphabet: list, menu: Menu, opponent_type: str):
         super().__init__(player_value, player_name, menu, needed_part_of_alphabet)
-        self.opponent_type = opponent_type
-        self.opponent_value = "X" if player_value == "O" else "O"
-        self.size = len(needed_part_of_alphabet)
-        self.difficulty_level = difficulty_level
+        self.__opponent_type = opponent_type
+        self.__opponent_value = "X" if player_value == "O" else "O"
+        self.__size = len(needed_part_of_alphabet)
+        self.__difficulty_level = difficulty_level
         self.setup_information_for_robot()
         self.setup_corners()
 
 
     def setup_information_for_robot(self) -> None:
-        self.possible_winning_options = []
-        for i in range(1, self.size + 1):
+        self.__possible_winning_options = []
+        for i in range(1, self.__size + 1):
             possible_winning_option = []
-            for j in range(self.size):
+            for j in range(self.__size):
                 possible_winning_option.append(f"{self.needed_part_of_alphabet[j]}{i}")
-            self.possible_winning_options.append(possible_winning_option)
+            self.__possible_winning_options.append(possible_winning_option)
         
-        for j in range(self.size):
+        for j in range(self.__size):
             possible_winning_option = []
-            for i in range(1, self.size + 1):
+            for i in range(1, self.__size + 1):
                 possible_winning_option.append(f"{self.needed_part_of_alphabet[j]}{i}")
-            self.possible_winning_options.append(possible_winning_option)
+            self.__possible_winning_options.append(possible_winning_option)
 
         possible_winning_option1 = []
         possible_winning_option2 = []
-        for k in range(self.size):
+        for k in range(self.__size):
             possible_winning_option1.append(f"{self.needed_part_of_alphabet[k]}{k + 1}")
-            possible_winning_option2.append(f"{self.needed_part_of_alphabet[self.size - 1 - k] + str(k + 1)}")
+            possible_winning_option2.append(f"{self.needed_part_of_alphabet[self.__size - 1 - k] + str(k + 1)}")
 
-        self.possible_winning_options.append(possible_winning_option1)
-        self.possible_winning_options.append(possible_winning_option2)
+        self.__possible_winning_options.append(possible_winning_option1)
+        self.__possible_winning_options.append(possible_winning_option2)
 
 
     def setup_corners(self) -> None:
-        last_element = self.needed_part_of_alphabet[self.size - 1]
+        last_element = self.needed_part_of_alphabet[self.__size - 1]
         first_element = self.needed_part_of_alphabet[0]
-        self.corners = []
-        self.corners.append(f"{first_element}{1}")
-        self.corners.append(f"{last_element}{1}")
-        self.corners.append(f"{first_element}{self.size}")
-        self.corners.append(f"{last_element}{self.size}")
+        self.__corners = []
+        self.__corners.append(f"{first_element}{1}")
+        self.__corners.append(f"{last_element}{1}")
+        self.__corners.append(f"{first_element}{self.__size}")
+        self.__corners.append(f"{last_element}{self.__size}")
 
 
     def move(self, board_record: dict) -> None:
-        if self.difficulty_level == "a":
+        if self.__difficulty_level == "a":
                 self.robot_move_easy_level(board_record)
-        elif self.difficulty_level == "b":
+        elif self.__difficulty_level == "b":
             self.robot_move_medium_level(board_record, None)
         else:
             self.robot_move_impossible_level(board_record)
@@ -71,7 +71,7 @@ class Robot(Player):
         self.menu.robot_makes_a_move(self.player_name, self.needed_part_of_alphabet, board_record)
         random_key = random.choice(available_places)
         board_record[random_key] = self.player_value
-        self.robot_started_to_guess_randomly = True
+        self.__robot_started_to_guess_randomly = True
 
 
     def robot_move_medium_level(self, board_record: dict, received_available_places: list) -> None:
@@ -102,9 +102,9 @@ class Robot(Player):
                             random_key = random.choice([element for element in possible_path_to_block if element in available_places])
                             board_record[random_key] = self.player_value
                         else:
-                            if self.user_wants_to_continue_answer is None and self.opponent_type == "human":
-                                self.user_wants_to_continue_answer = self.menu.get_continue_answer()
-                                if self.user_wants_to_continue_answer == "y":
+                            if self.__user_wants_to_continue_answer is None and self.__opponent_type == "human":
+                                self.__user_wants_to_continue_answer = self.menu.get_continue_answer()
+                                if self.__user_wants_to_continue_answer == "y":
                                     self.robot_move_easy_level(board_record)
                                 else:
                                     self.menu.exit_program()
@@ -113,15 +113,15 @@ class Robot(Player):
 
 
     def robot_move_impossible_level(self, board_record: dict) -> None:
-        if self.robot_started_to_guess_randomly is True:
+        if self.__robot_started_to_guess_randomly is True:
             self.robot_move_easy_level(board_record)
         else:
             self.menu.robot_makes_a_move(self.player_name, self.needed_part_of_alphabet, board_record)
             available_places = self.find_available_places(board_record)
-            matrix = self.size * self.size
+            matrix = self.__size * self.__size
             len_of_avail_places = len(available_places)
             if len_of_avail_places == matrix or len_of_avail_places == matrix - 1:
-                half = self.size // 2 + 1
+                half = self.__size // 2 + 1
                 key = f"{self.needed_part_of_alphabet[half - 1]}{half}"
                 if key in available_places:
                     board_record[key] = self.player_value
@@ -133,7 +133,7 @@ class Robot(Player):
 
     def find_available_places_in_corner(self, available_places: list, board_record: dict) -> None:
         for element in available_places:
-            if element in self.corners:
+            if element in self.__corners:
                 board_record[element] = self.player_value
                 break
 
@@ -151,13 +151,13 @@ class Robot(Player):
 
 
     def find_a_possible_path_to_block(self, board_record: dict) -> list:
-        return self.find_a_path(board_record, self.opponent_value)
+        return self.find_a_path(board_record, self.__opponent_value)
 
 
     def find_a_path(self, board_record: dict, player_value: str) -> list:
         helper_counter = 0
         result = []
-        for possible_winning_option in self.possible_winning_options:
+        for possible_winning_option in self.__possible_winning_options:
             counter = 0
             user_counter = 0
             for j in possible_winning_option:
@@ -166,7 +166,7 @@ class Robot(Player):
                     counter += 1
                 if element == player_value:
                     user_counter += 1
-            if counter == self.size:
+            if counter == self.__size:
                 if user_counter > helper_counter:
                     helper_counter = user_counter
                     result = possible_winning_option
@@ -174,7 +174,7 @@ class Robot(Player):
 
 
     def find_a_dangerous_path_to_block(self, board_record: dict) -> list:
-        return self.find_a_serious_path(board_record, self.opponent_value)
+        return self.find_a_serious_path(board_record, self.__opponent_value)
 
 
     def find_a_promising_path_to_move(self, board_record: dict) -> list:
@@ -182,7 +182,7 @@ class Robot(Player):
 
 
     def find_a_serious_path(self, board_record: dict, player_value: str) -> list:
-        for possible_winning_option in self.possible_winning_options:
+        for possible_winning_option in self.__possible_winning_options:
             counter = 0
             user_counter = 0
             for j in possible_winning_option:
@@ -191,21 +191,21 @@ class Robot(Player):
                     counter += 1
                 if element == player_value:
                     user_counter += 1
-            if counter == self.size and (user_counter >= self.size - 2 if self.size > 3 else user_counter > self.size - 2):
+            if counter == self.__size and (user_counter >= self.__size - 2 if self.__size > 3 else user_counter > self.__size - 2):
                 return possible_winning_option
         return []
     
 
     def find_an_instant_winner_path(self, board_record: dict) -> list:
-        for possible_winning_option in self.possible_winning_options:
+        for possible_winning_option in self.__possible_winning_options:
             counter = 0
             opponent_counter = 0
             for i in possible_winning_option:
                 element = board_record[i]
                 if element == self.player_value:
                     counter += 1
-                if element == self.opponent_value:
+                if element == self.__opponent_value:
                     opponent_counter += 1
-            if counter == self.size - 1 and opponent_counter == 0:
+            if counter == self.__size - 1 and opponent_counter == 0:
                 return possible_winning_option
         return []
