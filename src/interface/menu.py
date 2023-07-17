@@ -102,28 +102,28 @@ class Menu:
         print("Finished game! " + result)
 
 
-    def ask_difficulty_level(self, previous_failed_try: bool) -> str:
+    def ask_difficulty_level(self, robot_name: str, previous_failed_try: bool) -> str:
         if previous_failed_try:
             print("Wrong input!")
         print("Difficulty levels: ")
         print("a, Super easy")
         print("b, Medium")
         print("c, Impossible")
-        return input("Choose one (a/b/c): ")
+        return input(f"Choose one for {robot_name}(a/b/c): ")
 
 
-    def check_difficulty_level_answer(self, difficulty_answer: str) -> str:
+    def check_difficulty_level_answer(self, robot_name: str, difficulty_answer: str) -> str:
         diff_answer = difficulty_answer
         while diff_answer not in self.__good_diff_answers:
             os.system(self.__os_command)
-            diff_answer = self.ask_difficulty_level(True)
+            diff_answer = self.ask_difficulty_level(robot_name, True)
         return diff_answer
 
 
-    def get_difficulty_level(self) -> str:
+    def get_difficulty_level(self, robot_name: str) -> str:
         os.system(self.__os_command)
-        difficulty_level = self.ask_difficulty_level(False)
-        return self.check_difficulty_level_answer(difficulty_level)
+        difficulty_level = self.ask_difficulty_level(robot_name, False)
+        return self.check_difficulty_level_answer(robot_name, difficulty_level)
     
 
     def ask_continue_answer(self, previous_failed_try: bool) -> str:
