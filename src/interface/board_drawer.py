@@ -2,6 +2,8 @@ from interface.colors import Colors
 
 
 class Board_drawer:
+
+    
     def __init__(self):
         pass
 
