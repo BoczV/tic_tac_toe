@@ -86,9 +86,9 @@ class Test_Win_inspector:
 
     def test_check_if_someone_wins_returns_X(self, get_vertically_board_record: dict):
         win = self.win_inspector.check_if_someone_wins(get_vertically_board_record)
-        assert win is "X"
+        assert win == "X"
     
 
     def test_check_if_someone_wins_returns_O(self, get_horizontally_board_record: dict):
         win = self.win_inspector.check_if_someone_wins(get_horizontally_board_record)
-        assert win is "O"
+        assert win == "O"
