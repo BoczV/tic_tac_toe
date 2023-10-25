@@ -1,19 +1,19 @@
 import os
 import sys
 import time
-from interface.board_drawer import Board_drawer
+from interface.board_drawer import BoardDrawer
 from interface.colors import Colors
 
 class Menu:
     __good_board_size_answers: list = ['a', 'b', 'c']
     __good_diff_answers: list = ["a", "b", "c"]
-    __board_drawer: Board_drawer = None
-    __os_command: str = None
+    __board_drawer: BoardDrawer = None
+    __os_command: str
 
 
     def __init__(self, op_system: str):
         self.__os_command = 'clear' if op_system != "Windows" else 'cls'
-        self.__board_drawer = Board_drawer()
+        self.__board_drawer = BoardDrawer()
 
 
     def welcome_message(self, previous_failed_try: bool) -> str:
