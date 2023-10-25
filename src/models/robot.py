@@ -2,6 +2,7 @@ import secrets
 from interface.menu import Menu
 from models.player import Player
 
+
 class Robot(Player):
     __opponent_value: str
     __opponent_type: str
@@ -12,8 +13,15 @@ class Robot(Player):
     __user_wants_to_continue_answer: str
     __robot_started_to_guess_randomly: bool = False
 
-
-    def __init__(self, player_value: str, player_name: str, difficulty_level: str, needed_part_of_alphabet: list, menu: Menu, opponent_type: str):
+    def __init__(
+        self,
+        player_value: str,
+        player_name: str,
+        difficulty_level: str,
+        needed_part_of_alphabet: list,
+        menu: Menu,
+        opponent_type: str,
+    ):
         super().__init__(player_value, player_name, menu, needed_part_of_alphabet)
         self.__opponent_type = opponent_type
         self.__opponent_value = "X" if player_value == "O" else "O"
@@ -22,7 +30,6 @@ class Robot(Player):
         self.setup_information_for_robot()
         self.setup_corners()
 
-
     def setup_information_for_robot(self) -> None:
         self.__possible_winning_options = []
         for i in range(1, self.__size + 1):
@@ -30,7 +37,7 @@ class Robot(Player):
             for j in range(self.__size):
                 possible_winning_option.append(f"{self.needed_part_of_alphabet[j]}{i}")
             self.__possible_winning_options.append(possible_winning_option)
-        
+
         for j in range(self.__size):
             possible_winning_option = []
             for i in range(1, self.__size + 1):
@@ -41,11 +48,12 @@ class Robot(Player):
         possible_winning_option2 = []
         for k in range(self.__size):
             possible_winning_option1.append(f"{self.needed_part_of_alphabet[k]}{k + 1}")
-            possible_winning_option2.append(f"{self.needed_part_of_alphabet[self.__size - 1 - k] + str(k + 1)}")
+            possible_winning_option2.append(
+                f"{self.needed_part_of_alphabet[self.__size - 1 - k] + str(k + 1)}"
+            )
 
         self.__possible_winning_options.append(possible_winning_option1)
         self.__possible_winning_options.append(possible_winning_option2)
-
 
     def setup_corners(self) -> None:
         last_element = self.needed_part_of_alphabet[self.__size - 1]
@@ -56,61 +64,103 @@ class Robot(Player):
         self.__corners.append(f"{first_element}{self.__size}")
         self.__corners.append(f"{last_element}{self.__size}")
 
-
     def move(self, board_record: dict) -> None:
         if self.__difficulty_level == "a":
-                self.robot_move_easy_level(board_record)
+            self.robot_move_easy_level(board_record)
         elif self.__difficulty_level == "b":
             self.robot_move_medium_level(board_record, None)
         else:
             self.robot_move_impossible_level(board_record)
 
-
     def robot_move_easy_level(self, board_record: dict) -> None:
         available_places = self.find_available_places(board_record)
-        self.menu.robot_makes_a_move(self.player_name, self.needed_part_of_alphabet, board_record)
+        self.menu.robot_makes_a_move(
+            self.player_name, self.needed_part_of_alphabet, board_record
+        )
         random_key = secrets.choice(available_places)
         board_record[random_key] = self.player_value
         self.__robot_started_to_guess_randomly = True
 
-
-    def robot_move_medium_level(self, board_record: dict, received_available_places) -> None:
-        self.menu.robot_makes_a_move(self.player_name, self.needed_part_of_alphabet, board_record)
-        available_places = self.find_available_places(board_record) if received_available_places is None else received_available_places
+    def robot_move_medium_level(
+        self, board_record: dict, received_available_places
+    ) -> None:
+        self.menu.robot_makes_a_move(
+            self.player_name, self.needed_part_of_alphabet, board_record
+        )
+        available_places = (
+            self.find_available_places(board_record)
+            if received_available_places is None
+            else received_available_places
+        )
         option_for_end_game_instantly = self.find_an_instant_winner_path(board_record)
         if option_for_end_game_instantly != []:
-            key = [element for element in option_for_end_game_instantly if element in available_places][0]
+            key = [
+                element
+                for element in option_for_end_game_instantly
+                if element in available_places
+            ][0]
             board_record[key] = self.player_value
         else:
-            possible_blocking_option_for_danger = self.find_a_dangerous_path_to_block(board_record)
+            possible_blocking_option_for_danger = self.find_a_dangerous_path_to_block(
+                board_record
+            )
             if possible_blocking_option_for_danger != []:
-                random_key = secrets.choice([element for element in possible_blocking_option_for_danger if element in available_places])
+                random_key = secrets.choice(
+                    [
+                        element
+                        for element in possible_blocking_option_for_danger
+                        if element in available_places
+                    ]
+                )
                 board_record[random_key] = self.player_value
             else:
-                possible_promising_winning_option = self.find_a_promising_path_to_move(board_record)
+                possible_promising_winning_option = self.find_a_promising_path_to_move(
+                    board_record
+                )
                 if possible_promising_winning_option != []:
-                    random_key = secrets.choice([element for element in possible_promising_winning_option if element in available_places])
+                    random_key = secrets.choice(
+                        [
+                            element
+                            for element in possible_promising_winning_option
+                            if element in available_places
+                        ]
+                    )
                     board_record[random_key] = self.player_value
                 else:
-                    possible_winning_option = self.find_a_good_path_to_move(board_record)
+                    possible_winning_option = self.find_a_good_path_to_move(
+                        board_record
+                    )
                     if possible_winning_option != []:
-                        random_key = secrets.choice([element for element in possible_winning_option if element in available_places])
+                        random_key = secrets.choice(
+                            [
+                                element
+                                for element in possible_winning_option
+                                if element in available_places
+                            ]
+                        )
                         board_record[random_key] = self.player_value
                     else:
                         self.block_or_easy_move(board_record, available_places)
 
-
     def block_or_easy_move(self, board_record: dict, available_places: list):
         possible_path_to_block = self.find_a_possible_path_to_block(board_record)
         if possible_path_to_block != []:
-            random_key = secrets.choice([element for element in possible_path_to_block if element in available_places])
+            random_key = secrets.choice(
+                [
+                    element
+                    for element in possible_path_to_block
+                    if element in available_places
+                ]
+            )
             board_record[random_key] = self.player_value
         else:
             self.robot_move_or_exit(board_record)
 
-
     def robot_move_or_exit(self, board_record: dict):
-        if self.__opponent_type == "human" and self.__user_wants_to_continue_answer is None:
+        if (
+            self.__opponent_type == "human"
+            and self.__user_wants_to_continue_answer is None
+        ):
             self.__user_wants_to_continue_answer = self.menu.get_continue_answer()
             if self.__user_wants_to_continue_answer == "y":
                 self.robot_move_easy_level(board_record)
@@ -119,12 +169,13 @@ class Robot(Player):
         else:
             self.robot_move_easy_level(board_record)
 
-
     def robot_move_impossible_level(self, board_record: dict) -> None:
         if self.__robot_started_to_guess_randomly is True:
             self.robot_move_easy_level(board_record)
         else:
-            self.menu.robot_makes_a_move(self.player_name, self.needed_part_of_alphabet, board_record)
+            self.menu.robot_makes_a_move(
+                self.player_name, self.needed_part_of_alphabet, board_record
+            )
             available_places = self.find_available_places(board_record)
             matrix = self.__size * self.__size
             len_of_avail_places = len(available_places)
@@ -138,13 +189,13 @@ class Robot(Player):
             else:
                 self.robot_move_medium_level(board_record, available_places)
 
-
-    def find_available_places_in_corner(self, available_places: list, board_record: dict) -> None:
+    def find_available_places_in_corner(
+        self, available_places: list, board_record: dict
+    ) -> None:
         for element in available_places:
             if element in self.__corners:
                 board_record[element] = self.player_value
                 break
-
 
     def find_available_places(self, board_record: dict) -> list:
         result = []
@@ -153,14 +204,11 @@ class Robot(Player):
                 result.append(i)
         return result
 
-
     def find_a_good_path_to_move(self, board_record: dict) -> list:
         return self.find_a_path(board_record, self.player_value)
 
-
     def find_a_possible_path_to_block(self, board_record: dict) -> list:
         return self.find_a_path(board_record, self.__opponent_value)
-
 
     def find_a_path(self, board_record: dict, player_value: str) -> list:
         helper_counter = 0
@@ -175,18 +223,15 @@ class Robot(Player):
                 if element == player_value:
                     user_counter += 1
             if counter == self.__size and user_counter > helper_counter:
-                    helper_counter = user_counter
-                    result = possible_winning_option
+                helper_counter = user_counter
+                result = possible_winning_option
         return result
-
 
     def find_a_dangerous_path_to_block(self, board_record: dict) -> list:
         return self.find_a_serious_path(board_record, self.__opponent_value)
 
-
     def find_a_promising_path_to_move(self, board_record: dict) -> list:
         return self.find_a_serious_path(board_record, self.player_value)
-
 
     def find_a_serious_path(self, board_record: dict, player_value: str) -> list:
         for possible_winning_option in self.__possible_winning_options:
@@ -198,10 +243,13 @@ class Robot(Player):
                     counter += 1
                 if element == player_value:
                     user_counter += 1
-            if counter == self.__size and (user_counter >= self.__size - 2 if self.__size > 3 else user_counter > self.__size - 2):
+            if counter == self.__size and (
+                user_counter >= self.__size - 2
+                if self.__size > 3
+                else user_counter > self.__size - 2
+            ):
                 return possible_winning_option
         return []
-    
 
     def find_an_instant_winner_path(self, board_record: dict) -> list:
         for possible_winning_option in self.__possible_winning_options:
