@@ -2,8 +2,6 @@ from interface.menu import Menu
 from models.player import Player
 
 class Human(Player):
-
-
     def __init__(self, player_value: str, player_name: str, menu: Menu, needed_part_of_alphabet: list) -> None:
         super().__init__(player_value, player_name, menu, needed_part_of_alphabet)
 

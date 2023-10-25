@@ -1,7 +1,7 @@
 import pytest
-from ..logic.win_inspector import Win_inspector
+from ..logic.win_inspector import WinInspector
 
-class Test_Win_inspector:
+class TestWinInspector:
     win_inspector = None
 
     @pytest.fixture(autouse=True)
@@ -9,7 +9,7 @@ class Test_Win_inspector:
         needed_part_of_alphabet = ['a', 'b', 'c']
         size = 3
         value_switcher = {"user": "X", "robot": "O"}
-        self.win_inspector = Win_inspector(needed_part_of_alphabet, size, value_switcher)
+        self.win_inspector = WinInspector(needed_part_of_alphabet, size, value_switcher)
         yield
 
 

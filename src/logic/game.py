@@ -1,13 +1,13 @@
 import os
 import string
 import platform
-import random
+import secrets
 
 from interface.menu import Menu
 from models.robot import Robot
 from models.human import Human
 from models.player import Player
-from logic.win_inspector import Win_inspector
+from logic.win_inspector import WinInspector
 
 first_names: list = ["Kinga", "Réka", "Bence", "Balázs", "Viktor"]
 last_names: list = ["Kiss", "Varga", "Lengyel", "Nagy"]
@@ -15,15 +15,15 @@ last_names: list = ["Kiss", "Varga", "Lengyel", "Nagy"]
 class Game:
     __board_size_switcher: dict = {"a": 3, "b": 5, "c": 7}
     __alphabet: list = list(string.ascii_lowercase)
-    __board_record: dict = None
-    __needed_part_of_alphabet: list = None
-    __win_inspector: Win_inspector = None
+    __board_record: dict
+    __needed_part_of_alphabet: list
+    __win_inspector: WinInspector = None
     __first_player: Player = None
     __second_player: Player = None
     __menu: Menu = None
     __size: int = 0
-    __op_system: str = None
-    __game_mode: str = None
+    __op_system: str
+    __game_mode: str
 
 
     def __init__(self):
@@ -37,13 +37,13 @@ class Game:
         self.__size = self.__board_size_switcher[board_size_char]
         self.init_board_record()
         self.setup_players()
-        self.__win_inspector = Win_inspector(self.__needed_part_of_alphabet, self.__size, {"first": self.__first_player.player_value, "second": self.__second_player.player_value})
+        self.__win_inspector = WinInspector(self.__needed_part_of_alphabet, self.__size, {"first": self.__first_player.player_value, "second": self.__second_player.player_value})
 
 
     def setup_players(self) -> None:
         if self.__game_mode == "a":
             player_characters = ['X', 'O']
-            first_player_char = random.choice(player_characters)
+            first_player_char = secrets.choice(player_characters)
             second_player_char = "O" if first_player_char == "X" else "X"
             first_robot_name = f"{self.generate_robot_name()} (Robot1)"
             second_robot_name = f"{self.generate_robot_name()} (Robot2)"
@@ -69,7 +69,7 @@ class Game:
 
 
     def generate_robot_name(self) -> str:
-        return random.choice(first_names)+" "+random.choice(last_names)
+        return secrets.choice(first_names)+" "+secrets.choice(last_names)
 
 
     def play(self) -> None:

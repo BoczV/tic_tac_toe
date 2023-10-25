@@ -2,10 +2,10 @@ from interface.menu import Menu
 from abc import ABC, abstractmethod
 
 class Player(ABC):
-    player_value: str = None
-    player_name: str = None
+    player_value: str
+    player_name: str
     menu: Menu = None
-    needed_part_of_alphabet: list = None
+    needed_part_of_alphabet: list
 
 
     def __init__(self, player_value: str, player_name: str, menu: Menu, needed_part_of_alphabet: list):
