@@ -74,7 +74,7 @@ class Robot(Player):
         self.__robot_started_to_guess_randomly = True
 
 
-    def robot_move_medium_level(self, board_record: dict, received_available_places: list) -> None:
+    def robot_move_medium_level(self, board_record: dict, received_available_places) -> None:
         self.menu.robot_makes_a_move(self.player_name, self.needed_part_of_alphabet, board_record)
         available_places = self.find_available_places(board_record) if received_available_places is None else received_available_places
         option_for_end_game_instantly = self.find_an_instant_winner_path(board_record)
@@ -97,19 +97,27 @@ class Robot(Player):
                         random_key = secrets.choice([element for element in possible_winning_option if element in available_places])
                         board_record[random_key] = self.player_value
                     else:
-                        possible_path_to_block = self.find_a_possible_path_to_block(board_record)
-                        if possible_path_to_block != []:
-                            random_key = secrets.choice([element for element in possible_path_to_block if element in available_places])
-                            board_record[random_key] = self.player_value
-                        else:
-                            if self.__opponent_type == "human" and self.__user_wants_to_continue_answer is None:
-                                self.__user_wants_to_continue_answer = self.menu.get_continue_answer()
-                                if self.__user_wants_to_continue_answer == "y":
-                                    self.robot_move_easy_level(board_record)
-                                else:
-                                    self.menu.exit_program()
-                            else:
-                                self.robot_move_easy_level(board_record)
+                        self.block_or_easy_move(board_record, available_places)
+
+
+    def block_or_easy_move(self, board_record: dict, available_places: list):
+        possible_path_to_block = self.find_a_possible_path_to_block(board_record)
+        if possible_path_to_block != []:
+            random_key = secrets.choice([element for element in possible_path_to_block if element in available_places])
+            board_record[random_key] = self.player_value
+        else:
+            self.robot_move_or_exit(board_record)
+
+
+    def robot_move_or_exit(self, board_record: dict):
+        if self.__opponent_type == "human" and self.__user_wants_to_continue_answer is None:
+            self.__user_wants_to_continue_answer = self.menu.get_continue_answer()
+            if self.__user_wants_to_continue_answer == "y":
+                self.robot_move_easy_level(board_record)
+            else:
+                self.menu.exit_program()
+        else:
+            self.robot_move_easy_level(board_record)
 
 
     def robot_move_impossible_level(self, board_record: dict) -> None:
