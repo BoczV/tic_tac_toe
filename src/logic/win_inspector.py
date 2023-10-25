@@ -1,6 +1,6 @@
-class Win_inspector:
-    __value_switcher: dict = None
-    __needed_part_of_alphabet: list = None
+class WinInspector:
+    __value_switcher: dict
+    __needed_part_of_alphabet: list
     __size: int = 0
 
     def __init__(self, needed_part_of_alphabet: list, size: int, value_switcher: dict):

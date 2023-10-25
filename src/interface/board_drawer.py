@@ -1,13 +1,7 @@
 from interface.colors import Colors
 
 
-class Board_drawer:
-
-    
-    def __init__(self):
-        pass
-
-
+class BoardDrawer:
     def draw_header(self, part_of_alphabet: list) -> None:
         line_identifier = "0. "
         header = f"{line_identifier}"

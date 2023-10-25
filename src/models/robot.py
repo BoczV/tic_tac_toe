@@ -1,15 +1,15 @@
-import random
+import secrets
 from interface.menu import Menu
 from models.player import Player
 
 class Robot(Player):
-    __opponent_value: str = None
-    __opponent_type: str = None
-    __possible_winning_options: list = None
-    __corners: list = None
+    __opponent_value: str
+    __opponent_type: str
+    __possible_winning_options: list
+    __corners: list
     __size: int = 0
-    __difficulty_level: str = None
-    __user_wants_to_continue_answer: str = None
+    __difficulty_level: str
+    __user_wants_to_continue_answer: str
     __robot_started_to_guess_randomly: bool = False
 
 
@@ -69,7 +69,7 @@ class Robot(Player):
     def robot_move_easy_level(self, board_record: dict) -> None:
         available_places = self.find_available_places(board_record)
         self.menu.robot_makes_a_move(self.player_name, self.needed_part_of_alphabet, board_record)
-        random_key = random.choice(available_places)
+        random_key = secrets.choice(available_places)
         board_record[random_key] = self.player_value
         self.__robot_started_to_guess_randomly = True
 
@@ -84,25 +84,25 @@ class Robot(Player):
         else:
             possible_blocking_option_for_danger = self.find_a_dangerous_path_to_block(board_record)
             if possible_blocking_option_for_danger != []:
-                random_key = random.choice([element for element in possible_blocking_option_for_danger if element in available_places])
+                random_key = secrets.choice([element for element in possible_blocking_option_for_danger if element in available_places])
                 board_record[random_key] = self.player_value
             else:
                 possible_promising_winning_option = self.find_a_promising_path_to_move(board_record)
                 if possible_promising_winning_option != []:
-                    random_key = random.choice([element for element in possible_promising_winning_option if element in available_places])
+                    random_key = secrets.choice([element for element in possible_promising_winning_option if element in available_places])
                     board_record[random_key] = self.player_value
                 else:
                     possible_winning_option = self.find_a_good_path_to_move(board_record)
                     if possible_winning_option != []:
-                        random_key = random.choice([element for element in possible_winning_option if element in available_places])
+                        random_key = secrets.choice([element for element in possible_winning_option if element in available_places])
                         board_record[random_key] = self.player_value
                     else:
                         possible_path_to_block = self.find_a_possible_path_to_block(board_record)
                         if possible_path_to_block != []:
-                            random_key = random.choice([element for element in possible_path_to_block if element in available_places])
+                            random_key = secrets.choice([element for element in possible_path_to_block if element in available_places])
                             board_record[random_key] = self.player_value
                         else:
-                            if self.__user_wants_to_continue_answer is None and self.__opponent_type == "human":
+                            if self.__opponent_type == "human" and self.__user_wants_to_continue_answer is None:
                                 self.__user_wants_to_continue_answer = self.menu.get_continue_answer()
                                 if self.__user_wants_to_continue_answer == "y":
                                     self.robot_move_easy_level(board_record)
