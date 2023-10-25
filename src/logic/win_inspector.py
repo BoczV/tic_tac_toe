@@ -10,11 +10,7 @@ class WinInspector:
 
 
     def check_if_actor_wins(self, player_value: str, board_record: dict) -> bool:
-        if self.check_if_someone_wins_horizontally(player_value, board_record):
-            return True
-        elif self.check_if_someone_wins_vertically(player_value, board_record):
-            return True
-        elif self.check_if_someone_wins_cross_diagonally(player_value, board_record):
+        if self.check_if_someone_wins_horizontally(player_value, board_record) or self.check_if_someone_wins_vertically(player_value, board_record) or self.check_if_someone_wins_cross_diagonally(player_value, board_record):
             return True
         return False
 

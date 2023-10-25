@@ -22,7 +22,8 @@ class BoardDrawer:
             part_of_row = ""
             for j in part_of_alphabet:
                 element = board[(j + str(helper_index))]
-                colored_element = Colors.BLUE + element + Colors.END if element == "X" else (Colors.WARNING + element + Colors.END if element == "O" else element)
+                sub_colored_element = Colors.WARNING + element + Colors.END if element == "O" else element
+                colored_element = Colors.BLUE + element + Colors.END if element == "X" else sub_colored_element
                 part_of_row += f"| {colored_element} "
             row = f"{line_identifier}{part_of_row}|"
             print(row)

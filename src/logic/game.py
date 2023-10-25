@@ -81,7 +81,8 @@ class Game:
             player_value = "O" if player_value == "X" else "X"
             who_won = self.__win_inspector.check_if_someone_wins(self.__board_record)
             someone_won = who_won is not None
-        self.__menu.finish_game(None if who_won is None else (self.__first_player.player_name if who_won == self.__first_player.player_value else self.__second_player.player_name), self.__needed_part_of_alphabet, self.__board_record)
+        sub_who_won = self.__first_player.player_name if who_won == self.__first_player.player_value else self.__second_player.player_name
+        self.__menu.finish_game(who_won if who_won is None else sub_who_won, self.__needed_part_of_alphabet, self.__board_record)
 
 
     def play_one_round(self, player_value: str) -> None:
