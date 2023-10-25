@@ -166,8 +166,7 @@ class Robot(Player):
                     counter += 1
                 if element == player_value:
                     user_counter += 1
-            if counter == self.__size:
-                if user_counter > helper_counter:
+            if counter == self.__size and user_counter > helper_counter:
                     helper_counter = user_counter
                     result = possible_winning_option
         return result

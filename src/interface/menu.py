@@ -9,7 +9,7 @@ class Menu:
     __good_diff_answers: list = ["a", "b", "c"]
     __board_drawer: BoardDrawer = None
     __os_command: str
-
+    __error_message: str = "Wrong input!"
 
     def __init__(self, op_system: str):
         self.__os_command = 'clear' if op_system != "Windows" else 'cls'
@@ -20,7 +20,7 @@ class Menu:
         os.system(self.__os_command)
         print("TIC-TAC-TO")
         if previous_failed_try:
-            print("Wrong input!")
+            print(self.__error_message)
         return input("Wanna start? (Y/N) ")
 
 
@@ -35,7 +35,7 @@ class Menu:
     def ask_game_board_size(self, previous_failed_try: bool) -> str:
         os.system(self.__os_command)
         if previous_failed_try:
-            print("Wrong input!")
+            print(self.__error_message)
         print("How many rows and columns do you want?")
         print("a: 3x3, b: 5x5, c:7x7 ")
         return input("Which one would you choose? (a, b, c) ")
@@ -56,7 +56,7 @@ class Menu:
 
     def ask_to_make_a_step(self, previous_failed_try: bool, already_taken: bool) -> str:
         if previous_failed_try:
-            print("Wrong input!")
+            print(self.__error_message)
         elif already_taken:
             print("Already taken!")
         return input("Make a step (Like a1/b2/c3): ")
@@ -104,7 +104,7 @@ class Menu:
 
     def ask_difficulty_level(self, robot_name: str, previous_failed_try: bool) -> str:
         if previous_failed_try:
-            print("Wrong input!")
+            print(self.__error_message)
         print("Difficulty levels: ")
         print("a, Super easy")
         print("b, Medium")
@@ -128,7 +128,7 @@ class Menu:
 
     def ask_continue_answer(self, previous_failed_try: bool) -> str:
         if previous_failed_try:
-            print("Wrong input!")
+            print(self.__error_message)
         print("Robot: It's pointless to continue, none of us could win.")
         return input("Would you like to continue? (Y/N) ")
 
@@ -154,7 +154,7 @@ class Menu:
 
     def ask_character_answer(self, previous_failed_try: bool, user_name: str) -> str:
         if previous_failed_try:
-            print("Wrong input!")
+            print(self.__error_message)
         return input(f"Which character do you choose, {user_name}? (X/O) ")
 
 
@@ -174,7 +174,7 @@ class Menu:
 
     def ask_new_game_answer(self, previous_failed_try: bool) -> str:
         if previous_failed_try:
-            print("Wrong input!")
+            print(self.__error_message)
         return input("Start again? (Y/N) ")
 
 
@@ -193,7 +193,7 @@ class Menu:
 
     def ask_game_mode_answer(self, previous_failed_try: bool) -> str:
         if previous_failed_try:
-            print("Wrong input!")
+            print(self.__error_message)
         print("Game modes: ")
         print("a, Robot vs Robot")
         print("b, Human vs Robot")
